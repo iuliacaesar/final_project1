@@ -116,6 +116,9 @@ while not finished:
             if event.type == pygame.QUIT:
                 finished = True
 
+            
+                
+
     if page == 'main':        
         screen.fill(COLOR)
 
@@ -138,12 +141,42 @@ while not finished:
         for event in pygame.event.get():                               
             if event.type == pygame.QUIT:
                 finished = True
+            #если на странице main нажать правую кнопку мыши, открывается окно build
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+                page = 'build'
 
     if page == 'build':
 
-        screen.fill(BLACK)
-        pygame.display.update()
 
+        #рисуются кнопки
+        screen.fill(WHITE)
+        
+        button_build_house = Button(x = 300, y=200, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='build_house')
+        button_build_road = Button(x = 300, y=100, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='build_road')
+        button_build_close = Button(x = 300, y=50, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='close')
+        
+        button_build_house.draw(window=screen)
+        button_build_road.draw(window=screen)
+        button_build_close.draw(window=screen)
+
+        for event in pygame.event.get():
+            button_build_house.get_pressed(event)
+            button_build_road.get_pressed(event)
+            button_build_close.get_pressed(event)
+
+            #сейчас нажатие на любую кнопку возвращает на страницу main
+            if button_build_close.pressed and event.type == pygame.MOUSEBUTTONDOWN:
+                page = 'main'
+
+            if button_build_house.pressed and event.type ==pygame.MOUSEBUTTONDOWN:
+                page = 'main'
+            #возвращает на страницу main при нажатии кнопки close
+            if button_build_close.pressed and event.type ==pygame.MOUSEBUTTONDOWN:
+                page = 'main'
+
+
+        
+        pygame.display.update()
         # FIXME-Юля реализвать всплывающее окно с объектами для строительства
 
         for event in pygame.event.get():                               
