@@ -4,7 +4,7 @@ import numpy as np
 from button import *
 from objects import *
 from visual import*
-
+from field_data import*
 import pygame
 
 FPS = 60
@@ -27,15 +27,19 @@ HOUSE_LEN = len_width*3
 HOUSE_HIGHT = len_height*2
 WATER_LEN = len_width*3
 WATER_HIGHT = len_height*3
+ELECTRICITY_LEN = len_width*3
+ELECTRICITY_HIGHT = len_height*3
 
 HOUSE_COST = 10
 HOUSE_POFIT = 1
 ROAD_COST = 1
 WATER_ROAD_COST = 1
-ELECTRISITY_ROAD_COST = 1
+ELECTRICITY_ROAD_COST = 1
 WATER_COST = 50
-ELECTRISITY_COST = 50
-
+ELECTRICITY_COST = 50
+building_data = []
+for i in range(30):
+    building_data.append([0]*40)
 # Просто хорошая функция, чтобы выводить многострочные тексты, Лера не благодари, можешь, кстати, в vist запихнуть
 def blit_text(surface, text, pos, font, color = BLACK):
     words = [word.split(' ') for word in text.splitlines()] 
@@ -175,10 +179,11 @@ while not finished:
         fps_label = font.render(f"FPS: {real_fps}", True, "RED")
         screen.blit(fps_label, (20, HEIGHT-20))
 
-        for b in buildings+resources:
+        for b in buildings:
             draw_building(screen, b.x, b.y)
             b.draw()
-
+        for r in resources:
+            r.draw()
         button_save.draw(window=screen)
 
         # FIXME-Лера-настройка
@@ -221,16 +226,21 @@ while not finished:
         fps_label = font.render(f"FPS: {real_fps}", True, "RED")
         screen.blit(fps_label, (20, HEIGHT-20))
 
-        for b in buildings+resources:
+        for b in buildings:
             draw_building(screen, b.x, b.y)
             b.draw()
+        for r in resources:
+            r.draw()
 
         if what_you_build == 'house':
             mouse_x, mouse_y = pygame.mouse.get_pos()
             process_building(screen, mouse_x, mouse_y, HOUSE_LEN, HOUSE_HIGHT)
         if what_you_build == 'water':
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            process_building(screen, mouse_x, mouse_y, WATER_LEN, WATER_HIGHT)          
+            process_building(screen, mouse_x, mouse_y, WATER_LEN, WATER_HIGHT)
+        if what_you_build == 'electricity':
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            process_building(screen, mouse_x, mouse_y, ELECTRICITY_LEN, ELECTRICITY_HIGHT)
 
         # FIXME-Лера-настройка
         font0 = pygame.font.SysFont(None, 64)
@@ -246,19 +256,45 @@ while not finished:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'house':
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 mouse_x, mouse_y = get_xy(mouse_x, mouse_y)
-                new_home = Buildings(mouse_x, mouse_y, 1, 1, screen=screen)
-                buildings.append(new_home)
-                what_you_build = 'nothing'
-                score -= HOUSE_COST
-                page = 'main'
+                if check_the_place(what_you_build, building_data, mouse_x, mouse_y):
+                    new_home = Buildings(mouse_x, mouse_y, 1, 1, screen=screen)
+                    buildings.append(new_home)
+                    building_data = add_data(what_you_build, building_data, new_home)
+                    print(building_data)
+                    what_you_build = 'nothing'
+                    score -= HOUSE_COST
+                    page = 'main'
+                else:
+                    print('error')
+                    page = 'main'
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'water':
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 mouse_x, mouse_y = get_xy(mouse_x, mouse_y)
-                new_home = Resources(mouse_x, mouse_y, 1, screen=screen)
-                resources.append(new_home)
-                what_you_build = 'nothing'
-                score -= WATER_COST
-                page = 'main'
+                if check_the_place(what_you_build, building_data, mouse_x, mouse_y):
+                    new_resource = Resources(mouse_x, mouse_y, 1, screen=screen)
+                    resources.append(new_resource)
+                    building_data = add_data(what_you_build, building_data, new_resource)
+                    print(building_data)
+                    what_you_build = 'nothing'
+                    score -= WATER_COST
+                    page = 'main'
+                else:
+                    print('error')
+                    page = 'main'
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'electricity':
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                mouse_x, mouse_y = get_xy(mouse_x, mouse_y)
+                if check_the_place(what_you_build, building_data, mouse_x, mouse_y):
+                    new_resource = Resources(mouse_x, mouse_y, 2, screen=screen)
+                    resources.append(new_resource)
+                    building_data = add_data(what_you_build, building_data, new_resource)
+                    print(building_data)
+                    what_you_build = 'nothing'
+                    score -= ELECTRICITY_COST
+                    page = 'main'
+                else:
+                    print('error')
+                    page = 'main'
 
     if page == 'build':
         screen.fill(WHITE)
@@ -309,12 +345,12 @@ while not finished:
                 what_you_build = 'water'
                 page = 'process of build'
 
-            if button_build_electricity.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score >= ELECTRISITY_COST:
+            if button_build_electricity.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score >= ELECTRICITY_COST:
                 what_you_build = 'electricity'
                 page = 'process of build'
 
             # если недостаточно счёта для строительства
-            if (button_build_house.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score < HOUSE_COST) or (button_build_water.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score < WATER_COST) or (button_build_electricity.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score < ELECTRISITY_COST) or (button_build_road.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < ROAD_COST):
+            if (button_build_house.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score < HOUSE_COST) or (button_build_water.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score < WATER_COST) or (button_build_electricity.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score < ELECTRICITY_COST) or (button_build_road.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < ROAD_COST):
                 texttime = pygame.time.get_ticks()
                 text = 'not enough'
 
@@ -325,7 +361,6 @@ while not finished:
             if event.type == pygame.QUIT:
                 finished = True
 
-        # FIXME-Юля реализвать всплывающее окно с объектами для строительства
 
 pygame.quit()
 
