@@ -3,8 +3,8 @@ import random as rd
 import numpy as np
 from button import *
 from objects import *
-from visual import*
-from field_data import*
+from visual import *
+from field_data_functions import *
 import pygame
 
 FPS = 60
@@ -15,20 +15,20 @@ FPS = 60
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 COLOR = (95, 189, 51)
-WIDTH = 800
-HEIGHT = 600
-len_width = int(WIDTH/(8*5))
-len_height = int(HEIGHT/(6*5))
+WIDTH = 1200
+HEIGHT = 750
+len_width = int(WIDTH / (12 * 4))
+len_height = int(HEIGHT / (7.5 * 4))
 
 BUTTON_WIDTH = 200
 BUTTON_HIGHT = 60
 
-HOUSE_LEN = len_width*3
-HOUSE_HIGHT = len_height*2
-WATER_LEN = len_width*3
-WATER_HIGHT = len_height*3
-ELECTRICITY_LEN = len_width*3
-ELECTRICITY_HIGHT = len_height*3
+HOUSE_LEN = len_width * 6
+HOUSE_HIGHT = len_height * 3
+WATER_LEN = len_width * 4
+WATER_HIGHT = len_height * 3
+ELECTRICITY_LEN = len_width * 3
+ELECTRICITY_HIGHT = len_height * 3
 
 HOUSE_COST = 10
 HOUSE_POFIT = 1
@@ -39,10 +39,12 @@ WATER_COST = 50
 ELECTRICITY_COST = 50
 building_data = []
 for i in range(30):
-    building_data.append([0]*40)
+    building_data.append([0] * 40)
+
+
 # Просто хорошая функция, чтобы выводить многострочные тексты, Лера не благодари, можешь, кстати, в vist запихнуть
-def blit_text(surface, text, pos, font, color = BLACK):
-    words = [word.split(' ') for word in text.splitlines()] 
+def blit_text(surface, text, pos, font, color=BLACK):
+    words = [word.split(' ') for word in text.splitlines()]
     space = font.size(' ')[0]
     max_width, max_height = surface.get_size()
     x, y = pos
@@ -52,15 +54,16 @@ def blit_text(surface, text, pos, font, color = BLACK):
             word_width, word_height = word_surface.get_size()
             if x + word_width >= max_width:
                 x = pos[0]
-                y += word_height 
+                y += word_height
             surface.blit(word_surface, (x, y))
             x += word_width + space
         x = pos[0]
         y += word_height
 
+
 def upload_data_from_file():
     '''
-    Файл устроен: 
+    Файл устроен:
     1ое значение - water, 2ое значение - electricity через "\n\n"
     3e значение - данные для buildings вида "type,level,x,y\n"
     4ое значение - данные resousces вида "type,x,y\n"
@@ -86,17 +89,19 @@ def upload_data_from_file():
         new_resourse = Resources(i[1], i[2], i[0], screen)
         resources.append(new_resourse)
 
+
 def save_to_file():
     global buildings, resources, water, electricity, screen, score
-    data_building =''
-    data_resources =''
+    data_building = ''
+    data_resources = ''
     for b in buildings:
-        data_building += str(b.type)+','+str(b.level)+','+str(b.x)+','+str(b.y)+'\n'
+        data_building += str(b.type) + ',' + str(b.level) + ',' + str(b.x) + ',' + str(b.y) + '\n'
     for b in resources:
-        data_resources += str(b.type)+','+str(b.x)+','+str(b.y)+'\n'
-    data = str(water)+'\n\n'+str(electricity)+'\n\n'+data_building+'\n'+data_resources+'\n'+str(score)
+        data_resources += str(b.type) + ',' + str(b.x) + ',' + str(b.y) + '\n'
+    data = str(water) + '\n\n' + str(electricity) + '\n\n' + data_building + '\n' + data_resources + '\n' + str(score)
     with open("previous_game.txt", "w") as f:
         f.write(data)
+
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -122,13 +127,13 @@ while not finished:
         screen.fill(WHITE)
 
         # FIXME-Лера-настройка
-        button_start_new = Button(x = 300, y=200, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='start_new')
-        button_continue = Button(x = 300, y=100, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='continue')
-        
+        button_start_new = Button(x=300, y=200, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='start_new')
+        button_continue = Button(x=300, y=100, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='continue')
+
         # Вывод реального fps
         font = pygame.font.SysFont(None, 20)
         fps_label = font.render(f"FPS: {real_fps}", True, "RED")
-        screen.blit(fps_label, (20, HEIGHT-20))
+        screen.blit(fps_label, (20, HEIGHT - 20))
 
         # FIXME-Лера-настройка и тексты
         font0 = pygame.font.SysFont(None, 64)
@@ -136,14 +141,14 @@ while not finished:
         screen.blit(img0, (200, 20))
         beginningtext = 'Правила игры: \n прописывай Лера'
         font = pygame.font.SysFont("Calibri", 18)
-        blit_text(screen, beginningtext, (WIDTH*0.02, HEIGHT*0.2), font)
+        blit_text(screen, beginningtext, (WIDTH * 0.02, HEIGHT * 0.2), font)
 
         button_start_new.draw(window=screen)
         button_continue.draw(window=screen)
 
         pygame.display.update()
 
-        for event in pygame.event.get():  
+        for event in pygame.event.get():
 
             button_start_new.get_pressed(event)
             button_continue.get_pressed(event)
@@ -160,13 +165,14 @@ while not finished:
                 page = 'main'
 
             if event.type == pygame.QUIT:
-                finished = True      
-                
-    if page == 'main':        
+                finished = True
+
+    if page == 'main':
         screen.fill(COLOR)
 
         # FIXME-Лера-настройка
-        button_save = Button(x = WIDTH*0.8, y=HEIGHT*0.9, width=BUTTON_WIDTH/2, height=BUTTON_HIGHT/2, color_text=WHITE, text='Сохранить', size_text=20)
+        button_save = Button(x=WIDTH * 0.8, y=HEIGHT * 0.9, width=BUTTON_WIDTH / 2, height=BUTTON_HIGHT / 2,
+                             color_text=WHITE, text='Сохранить', size_text=20)
 
         '''Эти функции рисования написаны по приколу, в дальнейшем функции 
         рисования объектов будут принимать только объект'''
@@ -177,13 +183,13 @@ while not finished:
         # Вывод реального fps
         font = pygame.font.SysFont(None, 20)
         fps_label = font.render(f"FPS: {real_fps}", True, "RED")
-        screen.blit(fps_label, (20, HEIGHT-20))
+        screen.blit(fps_label, (20, HEIGHT - 20))
 
         for b in buildings:
-            draw_building(screen, b.x, b.y)
-            b.draw()
+            draw_building(screen, b)
         for r in resources:
-            r.draw()
+            draw_building(screen, r)
+
         button_save.draw(window=screen)
 
         # FIXME-Лера-настройка
@@ -202,13 +208,13 @@ while not finished:
 
         pygame.display.update()
 
-        for event in pygame.event.get(): 
-            button_save.get_pressed(event)    
+        for event in pygame.event.get():
+            button_save.get_pressed(event)
             if button_start_new.pressed and event.type == pygame.MOUSEBUTTONDOWN:
-                save_to_file()                  
+                save_to_file()
             if event.type == pygame.QUIT:
                 finished = True
-            #если на странице main нажать правую кнопку мыши, открывается окно build
+            # если на странице main нажать правую кнопку мыши, открывается окно build
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                 page = 'build'
 
@@ -224,13 +230,12 @@ while not finished:
         # Вывод реального fps
         font = pygame.font.SysFont(None, 20)
         fps_label = font.render(f"FPS: {real_fps}", True, "RED")
-        screen.blit(fps_label, (20, HEIGHT-20))
+        screen.blit(fps_label, (20, HEIGHT - 20))
 
         for b in buildings:
-            draw_building(screen, b.x, b.y)
-            b.draw()
+            draw_building(screen, b)
         for r in resources:
-            r.draw()
+            draw_building(screen, r)
 
         if what_you_build == 'house':
             mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -250,7 +255,7 @@ while not finished:
 
         pygame.display.update()
 
-        for event in pygame.event.get():                               
+        for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'house':
@@ -302,15 +307,16 @@ while not finished:
         # Вывод реального fps
         font = pygame.font.SysFont(None, 20)
         fps_label = font.render(f"FPS: {real_fps}", True, "RED")
-        screen.blit(fps_label, (20, HEIGHT-20))
+        screen.blit(fps_label, (20, HEIGHT - 20))
 
-        # FIXME-Лера-настройка       
-        button_build_house = Button(x = 200, y=200, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='build_house')
-        button_build_road = Button(x = 200, y=100, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='build_road')
-        button_build_water = Button(x = 400, y=200, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='build_water')
-        button_build_electricity = Button(x =400, y=100, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='build_electricity')
-        button_build_close = Button(x = 300, y=500, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='close')
-        
+        # FIXME-Лера-настройка
+        button_build_house = Button(x=200, y=200, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='build_house')
+        button_build_road = Button(x=200, y=100, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='build_road')
+        button_build_water = Button(x=400, y=200, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='build_water')
+        button_build_electricity = Button(x=400, y=100, width=BUTTON_WIDTH, height=BUTTON_HIGHT,
+                                          text='build_electricity')
+        button_build_close = Button(x=300, y=500, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='close')
+
         button_build_house.draw(window=screen)
         button_build_road.draw(window=screen)
         button_build_close.draw(window=screen)
@@ -321,7 +327,7 @@ while not finished:
         if pygame.time.get_ticks() - texttime < 500 and text == 'not enough':
             font_ = pygame.font.SysFont(None, 40)
             img_ = font_.render('Недостаточно счёта для строительства', True, BLACK)
-            screen.blit(img_, (WIDTH*0.4, 10))
+            screen.blit(img_, (WIDTH * 0.4, 10))
 
         pygame.display.update()
 
@@ -337,30 +343,32 @@ while not finished:
                 what_you_build = 'road'
                 page = 'process of build'
 
-            if button_build_house.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score >= HOUSE_COST:
+            if button_build_house.pressed and event.type == pygame.MOUSEBUTTONDOWN and score >= HOUSE_COST:
                 what_you_build = 'house'
                 page = 'process of build'
 
-            if button_build_water.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score >= WATER_COST:
+            if button_build_water.pressed and event.type == pygame.MOUSEBUTTONDOWN and score >= WATER_COST:
                 what_you_build = 'water'
                 page = 'process of build'
 
-            if button_build_electricity.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score >= ELECTRICITY_COST:
+            if button_build_electricity.pressed and event.type == pygame.MOUSEBUTTONDOWN and score >= ELECTRICITY_COST:
                 what_you_build = 'electricity'
                 page = 'process of build'
 
             # если недостаточно счёта для строительства
-            if (button_build_house.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score < HOUSE_COST) or (button_build_water.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score < WATER_COST) or (button_build_electricity.pressed and event.type ==pygame.MOUSEBUTTONDOWN and score < ELECTRICITY_COST) or (button_build_road.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < ROAD_COST):
+            if (button_build_house.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < HOUSE_COST) or (
+                    button_build_water.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < WATER_COST) or (
+                    button_build_electricity.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < ELECTRICITY_COST) or (
+                    button_build_road.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < ROAD_COST):
                 texttime = pygame.time.get_ticks()
                 text = 'not enough'
 
-            #возвращает на страницу main при нажатии кнопки close
-            if button_build_close.pressed and event.type ==pygame.MOUSEBUTTONDOWN:
+            # возвращает на страницу main при нажатии кнопки close
+            if button_build_close.pressed and event.type == pygame.MOUSEBUTTONDOWN:
                 page = 'main'
 
             if event.type == pygame.QUIT:
                 finished = True
-
 
 pygame.quit()
 

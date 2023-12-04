@@ -1,10 +1,11 @@
-WIDTH = 800
-HEIGHT = 600
-len_width = int(WIDTH/(8*5))
-len_height = int(HEIGHT/(6*5))
-HOUSE_LEN = len_width*3
-HOUSE_HIGHT = len_height*2
-WATER_LEN = len_width*3
+WIDTH = 1200
+HEIGHT = 750
+len_width = int(WIDTH/(12*4))
+len_height = int(HEIGHT/(7.5*4))
+
+HOUSE_LEN = len_width*6
+HOUSE_HIGHT = len_height*3
+WATER_LEN = len_width*4
 WATER_HIGHT = len_height*3
 ELECTRICITY_LEN = len_width*3
 ELECTRICITY_HIGHT = len_height*3
