@@ -5,8 +5,8 @@ import pygame
 
 WIDTH = 1200
 HEIGHT = 750
-len_width = int(WIDTH/(12*4))
-len_height = int(HEIGHT/(7.5*4))
+len_width = int(WIDTH/(16))
+len_height = int(HEIGHT/(10))
 
 pygame.init()
 
@@ -42,11 +42,11 @@ def draw_building(screen, b):
         position_y=-60
     if type(b).__name__ == "Resources":
         name_of_image = "ресурс" + str(b.type) + ".png"
-        size_of_image=100
-        position_y=-10
+        size_of_image=75
+        position_y=-0
     if type(b).__name__ == "Roads":
         name_of_image = "дорога" + str(b.type) + ".png"
-        size_of_image=50
+        size_of_image=75
         position_y=0
 
     image = pygame.image.load(name_of_image).convert_alpha()

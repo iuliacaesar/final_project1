@@ -29,15 +29,14 @@ class Resources():
         self.y = y
 
 class Roads():
-    def __init__(self, x, y, type, level):
+    def __init__(self, x, y, type, screen):
         self.type = type
-        self.begining_x = x
-        self.begining_y = y
+        self.x = x
+        self.y = y
         self.end_x = x
         self.end_y = y
         '''
-        type - тип дороги: 1 - обычная, 2 - водная, 3 - электро
-        x,y - координаты ВЕРХНЕГО ЛЕВОГО угла квадрата, где располагается с
+        x,y - координаты ВЕРХНЕГО ЛЕВОГО угла квадрата, где располагается 
         '''
 
 

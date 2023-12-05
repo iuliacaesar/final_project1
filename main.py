@@ -1,4 +1,5 @@
 import math
+import random
 import random as rd
 import numpy as np
 from button import *
@@ -38,6 +39,7 @@ ELECTRICITY_ROAD_COST = 1
 WATER_COST = 50
 ELECTRICITY_COST = 50
 building_data = []
+roads=[]
 for i in range(30):
     building_data.append([0] * 40)
 
@@ -185,6 +187,8 @@ while not finished:
         fps_label = font.render(f"FPS: {real_fps}", True, "RED")
         screen.blit(fps_label, (20, HEIGHT - 20))
 
+        for s in roads:
+            draw_building(screen, s)
         for b in buildings:
             draw_building(screen, b)
         for r in resources:
@@ -210,7 +214,7 @@ while not finished:
 
         for event in pygame.event.get():
             button_save.get_pressed(event)
-            if button_start_new.pressed and event.type == pygame.MOUSEBUTTONDOWN:
+            if button_save.pressed and event.type == pygame.MOUSEBUTTONDOWN:
                 save_to_file()
             if event.type == pygame.QUIT:
                 finished = True
@@ -232,6 +236,8 @@ while not finished:
         fps_label = font.render(f"FPS: {real_fps}", True, "RED")
         screen.blit(fps_label, (20, HEIGHT - 20))
 
+        for s in roads:
+            draw_building(screen, s)
         for b in buildings:
             draw_building(screen, b)
         for r in resources:
@@ -246,6 +252,9 @@ while not finished:
         if what_you_build == 'electricity':
             mouse_x, mouse_y = pygame.mouse.get_pos()
             process_building(screen, mouse_x, mouse_y, ELECTRICITY_LEN, ELECTRICITY_HIGHT)
+        if what_you_build == 'road':
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            process_building(screen, mouse_x, mouse_y, 75, 75)
 
         # FIXME-Лера-настройка
         font0 = pygame.font.SysFont(None, 64)
@@ -286,6 +295,7 @@ while not finished:
                 else:
                     print('error')
                     page = 'main'
+
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'electricity':
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 mouse_x, mouse_y = get_xy(mouse_x, mouse_y)
@@ -296,6 +306,21 @@ while not finished:
                     print(building_data)
                     what_you_build = 'nothing'
                     score -= ELECTRICITY_COST
+                    page = 'main'
+                else:
+                    print('error')
+                    page = 'main'
+
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'road':
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                mouse_x, mouse_y = get_xy(mouse_x, mouse_y)
+                if check_the_place(what_you_build, building_data, mouse_x, mouse_y):
+                    new_resource = Roads(mouse_x, mouse_y, random.randint(4,5), screen=screen)
+                    roads.append(new_resource)
+                    building_data = add_data(what_you_build, building_data, new_resource)
+                    print(building_data)
+                    what_you_build = 'nothing'
+                    score -= WATER_ROAD_COST
                     page = 'main'
                 else:
                     print('error')
