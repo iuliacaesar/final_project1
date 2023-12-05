@@ -17,18 +17,18 @@ BLACK = (0, 0, 0)
 COLOR = (95, 189, 51)
 WIDTH = 1200
 HEIGHT = 750
-len_width = int(WIDTH / (12 * 4))
-len_height = int(HEIGHT / (7.5 * 4))
+len_width = int(WIDTH / (16))
+len_height = int(HEIGHT / (10))
 
 BUTTON_WIDTH = 200
 BUTTON_HIGHT = 60
 
-HOUSE_LEN = len_width * 6
-HOUSE_HIGHT = len_height * 3
-WATER_LEN = len_width * 4
-WATER_HIGHT = len_height * 3
-ELECTRICITY_LEN = len_width * 3
-ELECTRICITY_HIGHT = len_height * 3
+HOUSE_LEN = len_width * 2
+HOUSE_HIGHT = len_height * 1
+WATER_LEN = len_width * 1
+WATER_HIGHT = len_height * 1
+ELECTRICITY_LEN = len_width * 1
+ELECTRICITY_HIGHT = len_height * 1
 
 HOUSE_COST = 10
 HOUSE_POFIT = 1
