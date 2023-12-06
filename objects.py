@@ -45,3 +45,24 @@ class Roads():
         # FIXME-Лера подгрузка картинок домов и их отрисовка
         # FIXME - все будет в файле visual.py
         pass
+
+
+    
+class Parks():
+    def __init__(self, x, y, type, level, screen):
+        self.screen = screen
+        self.type = type
+        self.level = level
+        self.x = x
+        self.y = y
+
+
+
+        
+class Problems():
+    def __init__(self, x, y, type, level, screen):
+        self.screen = screen
+        self.type = type
+        self.level = level
+        self.x = x
+        self.y = y
