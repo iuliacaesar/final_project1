@@ -5,6 +5,7 @@ import numpy as np
 from button import *
 from objects import *
 from visual import *
+from inoutput import *
 from field_data_functions import *
 import pygame
 
@@ -46,68 +47,6 @@ building_data = []
 for i in range(10):
     building_data.append([None] * 16)
 
-
-# Просто хорошая функция, чтобы выводить многострочные тексты, Лера не благодари, можешь, кстати, в vist запихнуть
-def blit_text(surface, text, pos, font, color=BLACK):
-    words = [word.split(' ') for word in text.splitlines()]
-    space = font.size(' ')[0]
-    max_width, max_height = surface.get_size()
-    x, y = pos
-    for line in words:
-        for word in line:
-            word_surface = font.render(word, True, color)
-            word_width, word_height = word_surface.get_size()
-            if x + word_width >= max_width:
-                x = pos[0]
-                y += word_height
-            surface.blit(word_surface, (x, y))
-            x += word_width + space
-        x = pos[0]
-        y += word_height
-
-
-def upload_data_from_file():
-    '''
-    Файл устроен:
-    1ое значение - water, 2ое значение - electricity через "\n\n"
-    3e значение - данные для buildings вида "type,level,x,y\n"
-    4ое значение - данные resousces вида "type,x,y\n"
-    5ое значение - score
-    '''
-    global buildings, resources, water, electricity, screen, score
-    with open("previous_game.txt", "r") as f:
-        data = f.read()
-    data = data.split('\n\n')
-    water = int(data[0])
-    electricity = int(data[1])
-    score = int(data[4])
-    data_ = data[2].split('\n')
-    data_ = [i.split(',') for i in data_]
-    data_ = [[float(j) for j in i] for i in data_]
-    for i in data_:
-        new_bilding = Buildings(i[2], i[3], i[0], i[1], screen)
-        buildings.append(new_bilding)
-    data = data[3].split('\n')
-    data = [i.split(',') for i in data]
-    data = [[float(j) for j in i] for i in data]
-    for i in data:
-        new_resourse = Resources(i[1], i[2], i[0], screen)
-        resources.append(new_resourse)
-
-
-def save_to_file():
-    global buildings, resources, water, electricity, screen, score
-    data_building = ''
-    data_resources = ''
-    for b in buildings:
-        data_building += str(b.type) + ',' + str(b.level) + ',' + str(b.x) + ',' + str(b.y) + '\n'
-    for b in resources:
-        data_resources += str(b.type) + ',' + str(b.x) + ',' + str(b.y) + '\n'
-    data = str(water) + '\n\n' + str(electricity) + '\n\n' + data_building + '\n' + data_resources + '\n' + str(score)
-    with open("previous_game.txt", "w") as f:
-        f.write(data)
-
-
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 buildings = []
@@ -124,7 +63,10 @@ what_you_build = 'nothing'
 text = ''
 texttime = 0
 
+connection(buildings, resources, water, electricity, screen, score)
+
 clock = pygame.time.Clock()
+load_fon()
 
 while not finished:
     real_fps = int(clock.get_fps())
@@ -166,7 +108,6 @@ while not finished:
             if button_continue.pressed and event.type == pygame.MOUSEBUTTONDOWN:
                 upload_data_from_file()
                 page = 'main'
-                # print(water, electricity, buildings)
 
             if button_start_new.pressed and event.type == pygame.MOUSEBUTTONDOWN:
                 page = 'main'
@@ -217,12 +158,19 @@ while not finished:
         img3 = font3.render('Счёт:  ' + str(score), True, WHITE)
         screen.blit(img3, (20, 80))
 
+        if pygame.time.get_ticks() - texttime < 500 and text == 'save':
+            font_ = pygame.font.SysFont(None, 40)
+            img_ = font_.render('Игра сохранена', True, WHITE)
+            screen.blit(img_, (WIDTH*0.4, HEIGHT/2))
+
         pygame.display.update()
 
         for event in pygame.event.get():
             button_save.get_pressed(event)
             if button_save.pressed and event.type == pygame.MOUSEBUTTONDOWN:
-                save_to_file()
+                save_to_file()    
+                text = 'save' 
+                texttime = pygame.time.get_ticks()
             if event.type == pygame.QUIT:
                 finished = True
             # если на странице main нажать правую кнопку мыши, открывается окно build
