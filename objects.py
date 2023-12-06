@@ -1,19 +1,22 @@
 import pygame
-from visual import*
+from visual import *
 
 BLUE = (0, 119, 255)
 
-class Buildings(): 
+
+class Buildings():
     '''
     x, y - координаты дома
     type - int от 1 до n (n - кичество типов домов) - тип дома
     '''
+
     def __init__(self, x, y, type, level, screen):
         self.screen = screen
         self.type = type
         self.level = level
         self.x = x
         self.y = y
+        self.time=0
 
     '''
     type - тип здания
@@ -21,33 +24,34 @@ class Buildings():
     x,y - координаты ВЕРХНЕГО ЛЕВОГО угла квадрата, где располагается здание
     '''
 
+
 class Resources():
     def __init__(self, x, y, type, screen):
         self.screen = screen
         self.type = type
         self.x = x
         self.y = y
+        self.time = 0
         self.angle = 0
+
 
 class Roads():
     def __init__(self, x, y, type, screen):
-        self.type = type
+        self.screen = screen
+        self.type = [1, 1, 1, 0]
         self.x = x
         self.y = y
-        self.end_x = x
-        self.end_y = y
+
+class Tracts():
+    def __init__(self,screen):
+        self.screen = screen
+        self.tract=[]
+
         '''
         x,y - координаты ВЕРХНЕГО ЛЕВОГО угла квадрата, где располагается 
         '''
 
 
-    def draw():
-        # FIXME-Лера подгрузка картинок домов и их отрисовка
-        # FIXME - все будет в файле visual.py
-        pass
-
-
-    
 class Parks():
     def __init__(self, x, y, type, level, screen):
         self.screen = screen
@@ -55,10 +59,9 @@ class Parks():
         self.level = level
         self.x = x
         self.y = y
+        self.time = 0
 
 
-
-        
 class Problems():
     def __init__(self, x, y, type, level, screen):
         self.screen = screen
@@ -66,3 +69,4 @@ class Problems():
         self.level = level
         self.x = x
         self.y = y
+        self.time = 0
