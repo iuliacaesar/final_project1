@@ -37,13 +37,15 @@ def draw_building(screen, b):
     x=b.x
     y=b.y
     if type(b).__name__=="Buildings":
-        name_of_image="замок"+"2"+".png"
+        name_of_image="замок"+"4"+".png"
         size_of_image=150
         position_y=-60
     if type(b).__name__ == "Resources":
         name_of_image = "ресурс" + str(b.type) + ".png"
         size_of_image=75
         position_y=-0
+
+
     if type(b).__name__ == "Roads":
         name_of_image = "дорога" + str(b.type) + ".png"
         size_of_image=75
@@ -61,6 +63,17 @@ def draw_building(screen, b):
         temp_surface.blit(image1, [0, 0])
         scaled_image1 = pygame.transform.scale(image1, (150, 150))
         screen.blit(scaled_image1, (x, y + position_y / 2))
+    if type(b).__name__ == "Resources":
+        name_of_image = "ресурс" + str(b.type) + ".png"
+        size_of_image=75
+        position_y=-0
+        if b.type==2:
+            image = pygame.image.load("мельница1.png").convert_alpha()
+            scaled_image = pygame.transform.scale(image, (size_of_image, size_of_image))
+            image = pygame.transform.rotate(scaled_image, b.angle)
+            b.angle+=2
+            screen.blit(image, (x+(-image.get_width()+size_of_image)/2, y + position_y+(-image.get_height()+size_of_image)/2))
+
 
     temp_surface = pygame.Surface([size_of_image, 75], pygame.SRCALPHA)
     pygame.draw.polygon(temp_surface, (255, 0, 0, 0), [[0, 0], [size_of_image, 0], [size_of_image, size_of_image], [0, size_of_image]])
