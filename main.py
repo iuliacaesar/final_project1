@@ -271,10 +271,10 @@ while not finished:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 mouse_x, mouse_y = get_xy(mouse_x, mouse_y)
                 if check_the_place(what_you_build, building_data, mouse_x, mouse_y):
-                    new_home = Buildings(mouse_x, mouse_y, 1, 1, screen=screen)
+                    new_home = Buildings(mouse_x, mouse_y, type, 1, screen=screen)
                     buildings.append(new_home)
                     building_data = add_data(what_you_build, building_data, new_home)
-                    print(building_data)
+                    #print(building_data)
                     what_you_build = 'nothing'
                     score -= HOUSE_COST
                     page = 'main'
@@ -370,7 +370,8 @@ while not finished:
 
             if button_build_house.pressed and event.type == pygame.MOUSEBUTTONDOWN and score >= HOUSE_COST:
                 what_you_build = 'house'
-                page = 'process of build'
+                page = 'castles'
+                #page = 'process of build'
 
             if button_build_water.pressed and event.type == pygame.MOUSEBUTTONDOWN and score >= WATER_COST:
                 what_you_build = 'water'
@@ -394,6 +395,36 @@ while not finished:
 
             if event.type == pygame.QUIT:
                 finished = True
+    if page == 'castles':
+        screen.fill(WHITE)
+        button_build_castle1 = Button(x=200, y=250, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='build_castle1')
+        button_build_castle2 = Button(x=200, y=320, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='build_castle2')
+        button_build_castle3 = Button(x=200, y=390, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='build_castle3')
+        
+        button_build_castle1.draw(window=screen)
+        button_build_castle2.draw(window=screen)
+        button_build_castle3.draw(window=screen)
+        pygame.display.update()
 
+        for event in pygame.event.get():
+            button_build_castle1.get_pressed(event)
+            button_build_castle2.get_pressed(event)
+            button_build_castle3.get_pressed(event)
+            
+        if button_build_castle1.pressed and event.type == pygame.MOUSEBUTTONDOWN and score >= HOUSE_COST:
+            what_you_build = 'house'
+            page = 'process of build'
+            type = 1
+            
+        if button_build_castle2.pressed and event.type == pygame.MOUSEBUTTONDOWN and score >= HOUSE_COST:
+            what_you_build = 'house'
+            page = 'process of build'
+            type = 2
+            
+        if button_build_castle3.pressed and event.type == pygame.MOUSEBUTTONDOWN and score >= HOUSE_COST:
+            what_you_build = 'house'
+            page = 'process of build'
+            type = 3
+                
 pygame.quit()
 
