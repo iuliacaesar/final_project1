@@ -79,30 +79,31 @@ def draw_building(screen, b):
 
 
     if type(b).__name__ == "Roads":
-        if type(b)==[1,0,1,0]:
+        name_of_doroga = "1"
+        if b.type ==[1, 0, 1, 0]:
             name_of_doroga="0"
-        elif type(b)==[0, 1, 0, 1]:
+        elif b.type ==[0, 1, 0, 1]:
             name_of_doroga="1"
-        elif type(b)==[1,1,1,0]:
+        elif b.type ==[1, 1, 1, 0]:
             name_of_doroga="2"
-        elif type(b)==[0,1,1,1]:
+        elif b.type ==[0, 1, 1, 1]:
             name_of_doroga="3"
-        elif type(b)==[1,0,1,1]:
+        elif b.type ==[1, 0, 1, 1]:
             name_of_doroga="4"
-        elif type(b)==[1,1,0,1]:
+        elif b.type ==[1, 1, 0, 1]:
             name_of_doroga="5"
-        elif type(b)==[1,1,1,1]:
+        elif b.type ==[1, 1, 1, 1]:
             name_of_doroga="6"
-        elif type(b)==[1,1,0,0]:
+        elif b.type ==[1, 1, 0, 0]:
             name_of_doroga="7"
-        elif type(b)==[0,1,1,0]:
+        elif b.type ==[0, 1, 1, 0]:
             name_of_doroga="8"
-        elif type(b)==[0,0,1,1]:
+        elif b.type ==[0, 0, 1, 1]:
             name_of_doroga="9"
-        elif type(b) == [1,0, 0, 1]:
+        elif b.type  == [1, 0,  0,  1]:
             name_of_doroga = "10"
 
-        name_of_image = ".\images\\" + name_of_doroga + ".png"
+        name_of_image = ".\images\\" + "дорога"+name_of_doroga + ".png"
         size_of_image=75
         position_y=0
 
@@ -140,10 +141,14 @@ def draw_building(screen, b):
 def draw_road(x, y):
     k=0
 
-def process_building(screen, x, y, len_x, len_y):
+def process_building(screen, x, y, len_x, len_y, able):
+    if able:
+        color = (0, 255, 0, 100)
+    else:
+        color = (255, 0, 0, 100)
     x, y = get_xy(x, y)
     temp_surface = pygame.Surface([len_x, len_y], pygame.SRCALPHA)
-    pygame.draw.polygon(temp_surface, (255, 0, 0, 100), [[0, 0], [len_x, 0], [len_x, len_y], [0, len_y]])
+    pygame.draw.polygon(temp_surface, color, [[0, 0], [len_x, 0], [len_x, len_y], [0, len_y]])
     screen.blit(temp_surface, [x, y])
 
 def blit_text(surface, text, pos, font, color='black'):

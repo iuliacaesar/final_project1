@@ -3,6 +3,40 @@ from visual import *
 
 BLUE = (0, 119, 255)
 
+HOUSE_COST = 10
+HOUSE_POFIT = 1
+ROAD_COST = 1
+PARK_COST = 20
+WATER_ROAD_COST = 1
+ELECTRICITY_ROAD_COST = 1
+WATER_COST = 50
+ELECTRICITY_COST = 50
+
+def check_score(score, what_you_build):
+    if what_you_build == 'house' and score >= HOUSE_COST:
+        return True
+    if what_you_build == 'road' and score >= ROAD_COST:
+        return True
+    if what_you_build == 'water' and score >= WATER_COST:
+        return True
+    if what_you_build == 'electricity' and score >= ELECTRICITY_COST:
+        return True
+    if what_you_build == 'park' and score >= PARK_COST:
+        return True
+    return False
+
+def get_score(what_you_build):
+    if what_you_build == 'house':
+        return HOUSE_COST
+    if what_you_build == 'road':
+        return ROAD_COST
+    if what_you_build == 'water':
+        return WATER_COST
+    if what_you_build == 'electricity':
+        return ELECTRICITY_COST
+    if what_you_build == 'park':
+        return PARK_COST
+
 
 class Buildings():
     '''
@@ -38,7 +72,7 @@ class Resources():
 class Roads():
     def __init__(self, x, y, type, screen):
         self.screen = screen
-        self.type = [1, 1, 1, 0]
+        self.type =  type
         self.x = x
         self.y = y
 
