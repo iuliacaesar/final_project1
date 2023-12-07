@@ -65,8 +65,11 @@ text = ''
 texttime = 0
 
 # Юле: А тут после подгрузки данные из файла предыдущей игры нужно изменить и building_data
+#ниже, после нажатия кнопки continue
 connection_in(buildings, resources, water, electricity, screen, score)
 buildings, resources, water, electricity, screen, score = connection_out()
+
+    
 
 clock = pygame.time.Clock()
 load_fon()
@@ -110,6 +113,15 @@ while not finished:
             if button_continue.pressed and event.type == pygame.MOUSEBUTTONDOWN:
                 upload_data_from_file()
                 page = 'main'
+
+
+
+                #Подгрузка данных в массив building_data из данных о предыдущей игре
+                for b in buildings:
+                    building_data = add_data('house', building_data, b)
+                for r in resources:
+                    building_data = add_data('water', building_data, r)
+                print(building_data)
 
             if button_start_new.pressed and event.type == pygame.MOUSEBUTTONDOWN:
                 page = 'main'
