@@ -22,8 +22,8 @@ HEIGHT = 750
 len_width = int(WIDTH / (16))
 len_height = int(HEIGHT / (10))
 
-BUTTON_WIDTH = 200
-BUTTON_HIGHT = 60
+BUTTON_WIDTH = WIDTH/3
+BUTTON_HIGHT = HEIGHT/15
 
 HOUSE_LEN = len_width * 2
 HOUSE_HIGHT = len_height * 1
@@ -67,17 +67,17 @@ connection(buildings, resources, water, electricity, screen, score)
 
 clock = pygame.time.Clock()
 load_fon()
-
+time=0
 while not finished:
     real_fps = int(clock.get_fps())
     clock.tick(FPS)
 
     if page == 'start':
-        screen.fill(WHITE)
+        draw_fon_start(screen, time)
 
         # FIXME-Лера-настройка
-        button_start_new = Button(x=300, y=200, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='start_new')
-        button_continue = Button(x=300, y=100, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='continue')
+        button_start_new = Button(x=125, y=600, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='START',)
+        button_continue = Button(x=675, y=600, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='CONTINUE', )
 
         # Вывод реального fps
         font = pygame.font.SysFont(None, 20)
@@ -88,9 +88,6 @@ while not finished:
         font0 = pygame.font.SysFont(None, 64)
         img0 = font0.render('Страница - start', True, BLACK)
         screen.blit(img0, (200, 20))
-        beginningtext = 'Правила игры: \n прописывай Лера'
-        font = pygame.font.SysFont("Calibri", 18)
-        blit_text(screen, beginningtext, (WIDTH * 0.02, HEIGHT * 0.2), font)
 
         button_start_new.draw(window=screen)
         button_continue.draw(window=screen)
@@ -305,7 +302,7 @@ while not finished:
                     page = 'main'
 
     if page == 'build':
-        screen.fill(WHITE)
+        draw_fon_menu(screen)
 
         # Вывод реального fps
         font = pygame.font.SysFont(None, 20)
@@ -410,5 +407,7 @@ while not finished:
             what_you_build = 'house'
             page = 'process of build'
             type = 3
+
+    time+=1
 pygame.quit()
 

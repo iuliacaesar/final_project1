@@ -15,6 +15,32 @@ def load_fon():
     global FON
     FON = pygame.image.load('.\images\image.psd.png').convert_alpha()
 
+
+
+def draw_fon_start(screen, time):
+    image = pygame.image.load(".\images\\фонстарта.jpg").convert_alpha()
+    scaled_image = pygame.transform.scale(image, (WIDTH, HEIGHT))
+    screen.blit(scaled_image, (0, 0))
+    draw_rules(screen, time)
+
+def draw_rules(screen, time):
+    temp_surface = pygame.Surface([300, 300], pygame.SRCALPHA)
+    pygame.draw.polygon(temp_surface, (100, 0, 150, 100), [[0, 0], [300, 0], [300, 300], [0, 300]])
+    screen.blit(temp_surface, [100, 100])
+    if time<=100:
+        beginningtext = 'Правила игры: \nЛера, прописывай'
+    elif time>100 and time<200:
+        beginningtext = "Пропишу"
+    else:
+        beginningtext = "Возможно"
+    font = pygame.font.SysFont(None, 30)
+    blit_text(screen, beginningtext, (150, 150), font)
+
+def draw_fon_menu(screen):
+    image = pygame.image.load(".\images\\CloudsBG.jpg").convert_alpha()
+    scaled_image = pygame.transform.scale(image, (WIDTH, HEIGHT))
+    screen.blit(scaled_image, (0, 0))
+
 def get_xy(x, y):
     new_x = int(x/len_width)*len_width
     new_y = int(y/len_height)*len_height

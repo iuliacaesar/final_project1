@@ -10,7 +10,7 @@ class Button:
     text - string - надпись на кнопке
     size_text - размер надписи на кнопке
     '''
-    def __init__(self, x=10, y=10, width=100, height=10, color='grey', color_text ='black', text='Ведите текст параметром text', size_text=36):
+    def __init__(self, x=10, y=10, width=100, height=10, color=(100, 0, 150, 100), color_text ='black', text='Ведите текст параметром text', size_text=36):
         self.x = x
         self.y = y
         self.width = width
@@ -21,6 +21,8 @@ class Button:
         self.color_text = color_text
         self.pressed = False
 
+
+
     def draw(self, window: pygame.Surface):
         '''
         функция рисует кнопку, красная - если кнопка нажата, свой цвет - если не нажата
@@ -28,7 +30,8 @@ class Button:
         if self.pressed:
             pygame.draw.rect(window, 'RED', (self.x, self.y, self.width, self.height))
         else:
-            pygame.draw.rect(window, self.color, (self.x, self.y, self.width, self.height))
+            pygame.draw.rect(window, (100, 0, 150, 100), (self.x, self.y, self.width, self.height))
+
 
         font = pygame.font.Font(None, self.size_text)
         text = font.render(self.text, True, self.color_text)
