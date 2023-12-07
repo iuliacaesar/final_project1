@@ -69,7 +69,7 @@ def draw_building(screen, b):
     x=b.x
     y=b.y
     if type(b).__name__=="Buildings":
-        name_of_image=".\images\\" + "замок"+"4"+".png"
+        name_of_image=".\images\\" + "замок"+str(b.type)+".png"
         size_of_image=150
         position_y=-60
     if type(b).__name__ == "Resources":
@@ -79,7 +79,30 @@ def draw_building(screen, b):
 
 
     if type(b).__name__ == "Roads":
-        name_of_image = ".\images\\" + "дорога4"  + ".png"
+        if type(b)==[1,0,1,0]:
+            name_of_doroga="0"
+        elif type(b)==[0, 1, 0, 1]:
+            name_of_doroga="1"
+        elif type(b)==[1,1,1,0]:
+            name_of_doroga="2"
+        elif type(b)==[0,1,1,1]:
+            name_of_doroga="3"
+        elif type(b)==[1,0,1,1]:
+            name_of_doroga="4"
+        elif type(b)==[1,1,0,1]:
+            name_of_doroga="5"
+        elif type(b)==[1,1,1,1]:
+            name_of_doroga="6"
+        elif type(b)==[1,1,0,0]:
+            name_of_doroga="7"
+        elif type(b)==[0,1,1,0]:
+            name_of_doroga="8"
+        elif type(b)==[0,0,1,1]:
+            name_of_doroga="9"
+        elif type(b) == [1,0, 0, 1]:
+            name_of_doroga = "10"
+
+        name_of_image = ".\images\\" + name_of_doroga + ".png"
         size_of_image=75
         position_y=0
 
