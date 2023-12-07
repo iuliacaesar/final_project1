@@ -48,7 +48,7 @@ def check_the_place(what_you_build, building_data, x, y):
     '''
     flag = True
     if what_you_build == 'house':
-        if y // len_height + HOUSE_HIGHT // len_height > HEIGHT // len_height or x // len_width + HOUSE_LEN // len_width > WIDTH // len_width:
+        if y // len_height + HOUSE_HIGHT // len_height > HEIGHT // len_height or x // len_width + HOUSE_LEN // len_width > WIDTH // len_width or y == 0:
             flag = False
         else:
             if building_data[y // len_height][x // len_width] != None or building_data[y // len_height][
@@ -120,3 +120,84 @@ def proverka_of_road(building_data, x, y, obj):
            t=False
     return t
 
+
+def water_road_check(building_data, obj, buildings, resources):
+    '''
+    функция проверяет, соединил ли водный провод замок и озеро (проверяет для дороги)
+    аргументы: массив с данными о постройках, водный провод, массив с постройками, массив с ресурсами
+    возвращает: True - если водный провод соединил замок и озеро, False - если нет
+    '''
+    
+
+
+
+    obj_beginning = building_data[obj.beginning_y // len_height][obj.beginning_x // len_width]
+    obj_ending = building_data[obj.ending_y // len_height][obj.ending_x // len_width]
+    if obj_beginning in buildings:
+        if obj_ending in resources and obj_ending.type == 1:
+            obj_beginning.level = min(obj_beginning.level + 1, 3)
+    elif obj_beginning == 1:
+        if obj_ending in resources and obj_ending.type == 1:
+            building_data[obj.beginning_y // len_height][obj.beginning_x // len_width - 1] = min(building_data[obj.beginning_y // len_height][obj.beginning_x // len_width - 1].level + 1, 3)
+    elif obj_beginning in resources and obj_beginning.type == 1:
+        if obj_ending in buildings:
+            obj_ending.level = min(obj_ending.level + 1, 3)
+        elif obj_ending == 1:
+            building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1] = min(building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1].level + 1, 3)
+'''
+    if  obj_ending in resources:
+        if obj_ending.type == 1:
+            if obj_beginning in buildings:
+                obj_beginning.level = min(obj_beginning.level + 1, 3)
+            if obj_beginning == 1:
+                building_data[obj.beginning_y // len_height][obj.beginning_x // len_width - 1] = min(building_data[obj.beginning_y // len_height][obj.beginning_x // len_width - 1].level + 1, 3)
+    if  obj_beginning in resources:
+        if obj_beginning.type == 1:
+            if obj_ending in buildings:
+                obj_ending.level = min(obj_ending.level + 1, 3)
+            if obj_ending == 1:
+                building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1] = min(building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1].level + 1, 3)
+ '''   
+
+
+
+
+
+'''
+def check_for_the_object(building_data, obj, buildings, resources, resource_roads):
+    for wr in resource_roads:
+        if wr.beginning_x // len_width == obj.x and wr.beginning_y // len_height == obj.y:
+            if obj in buildings and building_data[wr.ending_y // len_height][wr.ending_x // len_width] in resources:
+                if building_data[wr.ending_y // len_height][wr.ending_x // len_width].type == 1:
+                    obj.level = min(obj.level + 1, 3)
+            elif obj in resources and building_data[wr.beginning_y // len_height][wr.beginning_x // len_width] in buildings:
+                if building_data[wr.beginning_y // len_height][wr.beginning_x // len_width].type == 1:
+                    building_data[wr.beginning_y // len_height][wr.beginning_x // len_width].level = min(building_data[wr.beginning_y // len_height][wr.beginning_x // len_width].level + 1, 3)
+        
+'''           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        

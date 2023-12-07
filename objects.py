@@ -42,6 +42,16 @@ class Roads():
         self.x = x
         self.y = y
 
+
+class Resource_roads():
+    def __init__(self, x1, y1, x2, y2, type, screen):
+        self.screen = screen
+        self.type = type
+        self.beginning_x = x1
+        self.beginning_y = y1
+        self.ending_x = x2
+        self.ending_y = y2
+
 class Tracts():
     def __init__(self,screen):
         self.screen = screen
