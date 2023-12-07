@@ -15,7 +15,7 @@ import pygame
 # screen = 0
 # score = 0
 
-def connection(b, r, w, e, scr, sco):
+def connection_in(b, r, w, e, scr, sco):
     global buildings, resources, water, electricity, screen, score
     buildings = b
     resources = r
@@ -23,6 +23,10 @@ def connection(b, r, w, e, scr, sco):
     electricity = e
     screen = scr
     score = sco
+
+def connection_out():
+    global buildings, resources, water, electricity, screen, score
+    return buildings, resources, water, electricity, screen, score
 
 
 def upload_data_from_file():

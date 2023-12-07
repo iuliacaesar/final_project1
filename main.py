@@ -44,6 +44,7 @@ WATER_COST = 50
 ELECTRICITY_COST = 50
 building_data = []
 
+# Юле: Здесь ты заполняешь None
 for i in range(10):
     building_data.append([None] * 16)
 
@@ -63,17 +64,21 @@ what_you_build = 'nothing'
 text = ''
 texttime = 0
 
-connection(buildings, resources, water, electricity, screen, score)
+# Юле: А тут после подгрузки данные из файла предыдущей игры нужно изменить и building_data
+connection_in(buildings, resources, water, electricity, screen, score)
+buildings, resources, water, electricity, screen, score = connection_out()
 
 clock = pygame.time.Clock()
 load_fon()
 time=0
+
 while not finished:
     real_fps = int(clock.get_fps())
     clock.tick(FPS)
 
     if page == 'start':
-        draw_fon_start(screen, time)
+        screen.fill(WHITE)
+        # draw_fon_start(screen, time)
 
         # FIXME-Лера-настройка
         button_start_new = Button(x=125, y=600, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='START',)
@@ -176,12 +181,8 @@ while not finished:
 
     if page == 'process of build':
 
-        '''Эти функции рисования написаны по приколу, в дальнейшем функции 
-        рисования объектов будут принимать только объект'''
         draw_fon(screen, 0, 0)
         draw_setka(screen)
-        # draw_setka(screen)
-        # draw_building(screen, 100, 200)
 
         # Вывод реального fps
         font = pygame.font.SysFont(None, 20)
@@ -273,12 +274,15 @@ while not finished:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 mouse_x, mouse_y = get_xy(mouse_x, mouse_y)
                 if check_the_place(what_you_build, building_data, mouse_x, mouse_y):
-                    new_resource = Roads(mouse_x, mouse_y, [1, 1, 1, 0], screen=screen)
-                    if proverka_of_road(building_data, mouse_x, mouse_y, new_resource):
-                        roads.append(new_resource)
-                        building_data = add_data(what_you_build, building_data, new_resource)
+                    type = which_road(mouse_x, mouse_y, building_data)
+                    new_resource = Roads(mouse_x, mouse_y, type, screen=screen)
+                    # if proverka_of_road(building_data, mouse_x, mouse_y, new_resource):
+                    #     roads.append(new_resource)
+                    #     building_data = add_data(what_you_build, building_data, new_resource)
+                    roads.append(new_resource)
+                    building_data = add_data(what_you_build, building_data, new_resource)
                     what_you_build = 'nothing'
-                    score -= WATER_ROAD_COST
+                    score -= ROAD_COST
                     page = 'main'
                 else:
                     print('error')
@@ -302,7 +306,9 @@ while not finished:
                     page = 'main'
 
     if page == 'build':
-        draw_fon_menu(screen)
+
+        screen.fill(WHITE)
+        # draw_fon_menu(screen)
 
         # Вывод реального fps
         font = pygame.font.SysFont(None, 20)
@@ -377,6 +383,7 @@ while not finished:
 
             if event.type == pygame.QUIT:
                 finished = True
+   
     if page == 'castles':
         screen.fill(WHITE)
         button_build_castle1 = Button(x=200, y=250, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='build_castle1')
@@ -409,5 +416,5 @@ while not finished:
             type = 3
 
     time+=1
-pygame.quit()
 
+pygame.quit()
