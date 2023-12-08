@@ -209,6 +209,8 @@ while not finished:
             draw_building(screen, r)
         for p in parks:
             draw_park(screen, p)
+        for a in resource_roads:
+            draw_water_road(screen, a)
         
         mouse_x, mouse_y = pygame.mouse.get_pos()
         able = check_the_place(what_you_build, building_data, mouse_x, mouse_y)
@@ -227,7 +229,7 @@ while not finished:
         draw_setka(screen)
 
         # FIXME-Лера-настройка
-        button_quit_build = Button(x=WIDTH*0.9, y=10, width=BUTTON_WIDTH/5, height=BUTTON_HIGHT, text='FINISH',)
+        button_quit_build = Button(x=WIDTH*0.9, y=10, width=BUTTON_WIDTH/5, height=BUTTON_HIGHT, text='FINISH')
         button_quit_build.draw(window=screen)
 
         # FIXME-Лера-настройка
@@ -247,7 +249,7 @@ while not finished:
         for event in pygame.event.get():
             button_quit_build.get_pressed(event)
 
-            if (button_quit_build.pressed and event.type == pygame.MOUSEBUTTONDOWN) or not(enough_score):
+            if (button_quit_build.pressed and event.type == pygame.MOUSEBUTTONDOWN) or not(enough_score) or (event.type == pygame.MOUSEBUTTONDOWN and event.button == 3 ):
                 what_you_build = 'nothing'
                 page = 'main'
 
@@ -260,7 +262,6 @@ while not finished:
                     building_data = add_data(what_you_build, building_data, new_home)
                     # print(building_data)
                     # print(building_data[new_home.y//len_height][new_home.x//len_width])
-                    what_you_build = 'nothing'
                     score -= HOUSE_COST
                 else:
                     print('error')
@@ -278,8 +279,7 @@ while not finished:
                     new_resource = Resources(mouse_x, mouse_y, 2, screen=screen)
                     resources.append(new_resource)
                     building_data = add_data(what_you_build, building_data, new_resource)
-                    # print(building_data)
-                    
+                    # print(building_data)  
                     score -= ELECTRICITY_COST
                 else:
                     print('error')
@@ -309,21 +309,18 @@ while not finished:
                     print('error')
 
         # ==============================================================
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'water_road' and coordinates_type == 1:
-                mouse_x1, mouse_y1 = pygame.mouse.get_pos()
-                mouse_x1, mouse_y1 = get_xy(mouse_x1, mouse_y1)
-                coordinates_type = 2
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3 and what_you_build == 'water_road' and coordinates_type == 2:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'water_road' and coordinates_type == 2:
                 mouse_x2, mouse_y2 = pygame.mouse.get_pos()
                 mouse_x2, mouse_y2 = get_xy(mouse_x2, mouse_y2)
                 new_water_road = Resource_roads(mouse_x1, mouse_y1, mouse_x2, mouse_y2, 1, screen)
                 resource_roads.append(new_water_road)
-                what_you_build = 'nothing'
                 score -= WATER_ROAD_COST
                 water_road_check(building_data, new_water_road, buildings, resources)
-                page = 'main'
-                
-                
+
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'water_road' and coordinates_type == 1:
+                mouse_x1, mouse_y1 = pygame.mouse.get_pos()
+                mouse_x1, mouse_y1 = get_xy(mouse_x1, mouse_y1)
+                coordinates_type = 2              
                 
     if page == 'build':
 
@@ -426,7 +423,7 @@ while not finished:
                 text = 'not enough'
 
             # возвращает на страницу main при нажатии кнопки close
-            if button_build_close.pressed and event.type == pygame.MOUSEBUTTONDOWN:
+            if button_build_close.pressed and event.type == pygame.MOUSEBUTTONDOWN or (event.type == pygame.MOUSEBUTTONDOWN and event.button == 3):
                 page = 'main'
 
             if event.type == pygame.QUIT:
