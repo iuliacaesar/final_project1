@@ -13,7 +13,8 @@ pygame.init()
 # Фон загружается лишь один раз в глабальную переменную, а потом лишь рисуется
 def load_fon():
     global FON, road0, road1, road2, road3, road4, road5, road6, road7, road8, road9, road10, castle1, castle2, castle3, \
-        mile1, mile2, lake, star1, star2, star3, clouds, fonstarta
+        mile1, mile2, lake, star1, star2, star3, clouds, fonstarta, button_castle1, button_castle2, button_castle3, \
+        button_lake, button_mile, button_road, button_park, button_water
 
     FON = pygame.image.load('.\images\image.psd.png').convert_alpha()
     road0 = pygame.image.load('.\images\дорога0.png').convert_alpha()
@@ -44,7 +45,40 @@ def load_fon():
     clouds=pygame.image.load(".\images\\CloudsBG.jpg").convert_alpha()
     fonstarta=pygame.image.load(".\images\\фонстарта.jpg").convert_alpha()
 
+    button_castle1=pygame.image.load(".\images\\button_castle1.png").convert_alpha()
+    button_castle2=pygame.image.load(".\images\\button_castle2.png").convert_alpha()
+    button_castle3=pygame.image.load(".\images\\button_castle3.png").convert_alpha()
+    button_lake=pygame.image.load(".\images\\button_lake.png").convert_alpha()
+    button_mile=pygame.image.load(".\images\\button_mile.png").convert_alpha()
+    button_road=pygame.image.load(".\images\\button_road.png").convert_alpha()
+    button_park=pygame.image.load(".\images\\button_park.png").convert_alpha()
+    button_water=pygame.image.load(".\images\\button_water.png").convert_alpha()
 
+
+
+def draw_button(but, window):
+    if but.text == "castle 1":
+        image = button_castle1
+    elif but.text == "castle 2":
+        image = button_castle2
+    elif but.text == "castle 3":
+        image = button_castle3
+    elif but.text == "lake":
+        image = button_lake
+    elif but.text=="mile":
+        image = button_mile
+    elif but.text=="road":
+        image = button_road
+    elif but.text == "park":
+        image = button_park
+    else :
+        image = button_water
+
+
+    temp_surface = pygame.Surface([image.get_width(), image.get_height()], pygame.SRCALPHA)
+    temp_surface.blit(image, [0, 0])
+    scaled_image = pygame.transform.scale(image, (but.width - 10, but.height - 10))
+    window.blit(scaled_image, (but.x + 5, but.y + 5))
 
 def draw_fon_start(screen, time):
     image = fonstarta
@@ -104,8 +138,10 @@ def draw_building(screen, b):
             image=castle2
         elif b.type==3:
             image=castle3
+      
         size_of_image=150
         position_y=-60
+
     if type(b).__name__ == "Resources":
         if b.type==1:
             image=lake
@@ -184,7 +220,7 @@ def process_building(screen, x, y, len_x, len_y, able):
     else:
         color = (255, 0, 0, 100)
     x, y = get_xy(x, y)
-    temp_surface = pygame.Surface([len_x, len_y], pygame.SRCALPHA)
+    temp_surface = pygame.Surface([len_x*2, len_y*2], pygame.SRCALPHA)
     pygame.draw.polygon(temp_surface, color, [[0, 0], [len_x, 0], [len_x, len_y], [0, len_y]])
     screen.blit(temp_surface, [x, y])
 
@@ -204,21 +240,6 @@ def blit_text(surface, text, pos, font, color='black'):
             x += word_width + space
         x = pos[0]
         y += word_height
-
-
-def draw_water_road(screen, b):
-    wgh = 2.5
-    r = 5
-    pygame.draw.line(screen, (0, 155, 245), [int(b.beginning_x + len_width/2), int(b.beginning_y + len_height/2)], [int(b.ending_x+ len_width/2), int(b.ending_y+ len_height/2)], int(wgh))
-    pygame.draw.circle(
-        screen, (0, 155, 245),
-        (int(b.beginning_x + len_width/2), int(b.beginning_y + len_height/2)),
-        int(r))
-    pygame.draw.circle(
-        screen, (0, 155, 245),
-        (int(b.ending_x+ len_width/2), int(b.ending_y+ len_height/2)),
-        int(r))
-
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

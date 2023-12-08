@@ -22,8 +22,9 @@ HEIGHT = 750
 len_width = int(WIDTH / (16))
 len_height = int(HEIGHT / (10))
 
-BUTTON_WIDTH = WIDTH/3
-BUTTON_HIGHT = HEIGHT/15
+BUTTON_WIDTH = WIDTH / 3
+BUTTON_HIGHT = HEIGHT / 15
+BUTTON_LEN = 200
 
 HOUSE_LEN = len_width * 2
 HOUSE_HIGHT = len_height * 1
@@ -66,15 +67,13 @@ text = ''
 texttime = 0
 
 # Юле: А тут после подгрузки данные из файла предыдущей игры нужно изменить и building_data
-#ниже, после нажатия кнопки continue
+# ниже, после нажатия кнопки continue
 connection_in(buildings, resources, water, electricity, screen, score)
 buildings, resources, water, electricity, screen, score = connection_out()
 
-    
-
 clock = pygame.time.Clock()
 load_fon()
-time=0
+time = 0
 
 while not finished:
     real_fps = int(clock.get_fps())
@@ -85,7 +84,7 @@ while not finished:
         draw_fon_start(screen, time)
 
         # FIXME-Лера-настройка
-        button_start_new = Button(x=125, y=600, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='START',)
+        button_start_new = Button(x=125, y=600, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='START', )
         button_continue = Button(x=675, y=600, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='CONTINUE', )
 
         # Вывод реального fps
@@ -115,14 +114,12 @@ while not finished:
                 upload_data_from_file()
                 page = 'main'
 
-
-
-                #Подгрузка данных в массив building_data из данных о предыдущей игре
+                # Подгрузка данных в массив building_data из данных о предыдущей игре
                 for b in buildings:
                     building_data = add_data('house', building_data, b)
                 for r in resources:
                     building_data = add_data('water', building_data, r)
-                #print(building_data)
+                # print(building_data)
 
             if button_start_new.pressed and event.type == pygame.MOUSEBUTTONDOWN:
                 page = 'main'
@@ -134,8 +131,8 @@ while not finished:
         screen.fill(COLOR)
 
         # FIXME-Лера-настройка
-        button_save = Button(x=WIDTH * 0.8, y=HEIGHT * 0.9, width=BUTTON_WIDTH / 2, height=BUTTON_HIGHT / 2,
-                             color_text=WHITE, text='Сохранить', size_text=20)
+        button_save = Button(x=WIDTH * 0.8, y=HEIGHT * 0.9, width=BUTTON_WIDTH / 2, height=BUTTON_HIGHT/5*3,
+                             color_text=BLACK, text='SAVE', size_text=20)
 
         '''Эти функции рисования написаны по приколу, в дальнейшем функции 
         рисования объектов будут принимать только объект'''
@@ -161,16 +158,16 @@ while not finished:
 
         # FIXME-Лера-настройка
         font0 = pygame.font.SysFont(None, 64)
-        img0 = font0.render('Cтраница - main', True, WHITE)
+        img0 = font0.render('Cтраница - main', True, BLACK)
         screen.blit(img0, (200, 20))
         font1 = pygame.font.SysFont(None, 24)
-        img1 = font1.render('Вода:  ' + str(water), True, WHITE)
+        img1 = font1.render('Вода:  ' + str(water), True, BLACK)
         screen.blit(img1, (20, 20))
         font2 = pygame.font.SysFont(None, 24)
-        img2 = font2.render('Электричество:  ' + str(electricity), True, WHITE)
+        img2 = font2.render('Электричество:  ' + str(electricity), True, BLACK)
         screen.blit(img2, (20, 50))
         font3 = pygame.font.SysFont(None, 24)
-        img3 = font3.render('Счёт:  ' + str(score), True, WHITE)
+        img3 = font3.render('Счёт:  ' + str(score), True, BLACK)
         screen.blit(img3, (20, 80))
 
         if pygame.time.get_ticks() - texttime < 500 and text == 'save':
@@ -209,9 +206,7 @@ while not finished:
             draw_building(screen, r)
         for p in parks:
             draw_park(screen, p)
-        for a in resource_roads:
-            draw_water_road(screen, a)
-        
+
         mouse_x, mouse_y = pygame.mouse.get_pos()
         able = check_the_place(what_you_build, building_data, mouse_x, mouse_y)
 
@@ -229,7 +224,8 @@ while not finished:
         draw_setka(screen)
 
         # FIXME-Лера-настройка
-        button_quit_build = Button(x=WIDTH*0.9, y=10, width=BUTTON_WIDTH/5, height=BUTTON_HIGHT, text='FINISH')
+        button_quit_build = Button(x=WIDTH * 0.8, y=HEIGHT * 0.9, width=BUTTON_WIDTH / 2, height=BUTTON_HIGHT/5*3,
+                             color_text=BLACK, text='FINISH', size_text=20)
         button_quit_build.draw(window=screen)
 
         # FIXME-Лера-настройка
@@ -238,8 +234,8 @@ while not finished:
         img3 = font3.render('Счёт:  ' + str(score), True, WHITE)
         screen.blit(img3, (20, 80))
 
-        img_3 = font3.render(str(score)+' / '+str(get_score(what_you_build=what_you_build)), True, WHITE)
-        screen.blit(img_3, (mouse_x+10, mouse_y-10))
+        img_3 = font3.render(str(score) + ' / ' + str(get_score(what_you_build=what_you_build)), True, WHITE)
+        screen.blit(img_3, (mouse_x + 10, mouse_y - 10))
 
         pygame.display.update()
 
@@ -249,7 +245,7 @@ while not finished:
         for event in pygame.event.get():
             button_quit_build.get_pressed(event)
 
-            if (button_quit_build.pressed and event.type == pygame.MOUSEBUTTONDOWN) or not(enough_score) or (event.type == pygame.MOUSEBUTTONDOWN and event.button == 3 ):
+            if (button_quit_build.pressed and event.type == pygame.MOUSEBUTTONDOWN) or not (enough_score):
                 what_you_build = 'nothing'
                 page = 'main'
 
@@ -262,6 +258,7 @@ while not finished:
                     building_data = add_data(what_you_build, building_data, new_home)
                     # print(building_data)
                     # print(building_data[new_home.y//len_height][new_home.x//len_width])
+                    what_you_build = 'nothing'
                     score -= HOUSE_COST
                 else:
                     print('error')
@@ -279,7 +276,8 @@ while not finished:
                     new_resource = Resources(mouse_x, mouse_y, 2, screen=screen)
                     resources.append(new_resource)
                     building_data = add_data(what_you_build, building_data, new_resource)
-                    # print(building_data)  
+                    # print(building_data)
+
                     score -= ELECTRICITY_COST
                 else:
                     print('error')
@@ -303,25 +301,26 @@ while not finished:
                     # print(new_park.x, new_park.y)
                     building_data = add_data(what_you_build, building_data, new_park)
                     # print(building_data)
-                    
+
                     score -= PARK_COST
                 else:
                     print('error')
 
-        # ==============================================================
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'water_road' and coordinates_type == 2:
+            # ==============================================================
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'water_road' and coordinates_type == 1:
+                mouse_x1, mouse_y1 = pygame.mouse.get_pos()
+                mouse_x1, mouse_y1 = get_xy(mouse_x1, mouse_y1)
+                coordinates_type = 2
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3 and what_you_build == 'water_road' and coordinates_type == 2:
                 mouse_x2, mouse_y2 = pygame.mouse.get_pos()
                 mouse_x2, mouse_y2 = get_xy(mouse_x2, mouse_y2)
                 new_water_road = Resource_roads(mouse_x1, mouse_y1, mouse_x2, mouse_y2, 1, screen)
                 resource_roads.append(new_water_road)
+                what_you_build = 'nothing'
                 score -= WATER_ROAD_COST
                 water_road_check(building_data, new_water_road, buildings, resources)
+                page = 'main'
 
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'water_road' and coordinates_type == 1:
-                mouse_x1, mouse_y1 = pygame.mouse.get_pos()
-                mouse_x1, mouse_y1 = get_xy(mouse_x1, mouse_y1)
-                coordinates_type = 2              
-                
     if page == 'build':
 
         screen.fill(WHITE)
@@ -333,20 +332,18 @@ while not finished:
         screen.blit(fps_label, (20, HEIGHT - 20))
 
         # FIXME-Лера-настройка
-        button_build_house = Button(x=200, y=200, width=BUTTON_WIDTH/2, height=BUTTON_HIGHT, text='build_house')
-        button_build_road = Button(x=200, y=100, width=BUTTON_WIDTH/2, height=BUTTON_HIGHT, text='build_road')
-        button_build_water = Button(x=700, y=200, width=BUTTON_WIDTH/2, height=BUTTON_HIGHT, text='build_water')
-        button_build_electricity = Button(x=700, y=100, width=BUTTON_WIDTH/2, height=BUTTON_HIGHT,
-                                          text='build_electricity')
-        button_build_close = Button(x=300, y=560, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='close')
-        button_build_park = Button(x=700, y=300, width=BUTTON_WIDTH/2, height=BUTTON_HIGHT, text='build_park')
-        button_build_castle1 = Button(x=200, y=200, width=BUTTON_WIDTH/2, height=BUTTON_HIGHT, text='build_castle1')
-        button_build_castle2 = Button(x=200, y=300, width=BUTTON_WIDTH/2, height=BUTTON_HIGHT, text='build_castle2')
-        button_build_castle3 = Button(x=200, y=400, width=BUTTON_WIDTH/2, height=BUTTON_HIGHT, text='build_castle3')
-        button_connect_water = Button(x=200, y=500, width=BUTTON_WIDTH/2, height=BUTTON_HIGHT, text='connect_water')
+        button_build_road = Button(x=160, y=275, width=BUTTON_LEN , height=BUTTON_LEN, text='road')
+        button_build_water = Button(x=840, y=40, width=BUTTON_LEN, height=BUTTON_LEN, text='lake')
+        button_build_electricity = Button(x=840, y=275, width=BUTTON_LEN, height=BUTTON_LEN, text='mile')
+        button_build_close = Button(x=WIDTH * 0.8, y=HEIGHT * 0.9, width=BUTTON_WIDTH / 2, height=BUTTON_HIGHT/5*3,
+                             color_text=BLACK, text='CLOSE', size_text=20)
+        button_build_park = Button(x=160, y=40, width=BUTTON_LEN, height=BUTTON_LEN, text='park')
+        button_build_castle1 = Button(x=500, y=40,  width=BUTTON_LEN, height=BUTTON_LEN, text='castle 1')
+        button_build_castle2 = Button(x=500, y=275, width=BUTTON_LEN, height=BUTTON_LEN, text='castle 2')
+        button_build_castle3 = Button(x=500, y=510, width=BUTTON_LEN, height=BUTTON_LEN, text='castle 3')
+        button_connect_water = Button(x=160, y=510, width=BUTTON_LEN, height=BUTTON_LEN, text='connect_water')
 
-        
-        button_build_house.draw(window=screen)
+
         button_build_road.draw(window=screen)
         button_build_close.draw(window=screen)
         button_build_water.draw(window=screen)
@@ -385,12 +382,12 @@ while not finished:
                 what_you_build = 'house'
                 type = 1
                 page = 'process of build'
-                
+
             if button_build_castle2.pressed and event.type == pygame.MOUSEBUTTONDOWN and score >= HOUSE_COST:
                 what_you_build = 'house'
                 type = 2
                 page = 'process of build'
-                
+
             if button_build_castle3.pressed and event.type == pygame.MOUSEBUTTONDOWN and score >= HOUSE_COST:
                 what_you_build = 'house'
                 type = 3
@@ -414,7 +411,8 @@ while not finished:
                 page = 'process of build'
 
             # если недостаточно счёта для строительства
-            if ((button_build_castle1.pressed) or (button_build_castle2.pressed) or (button_build_castle3.pressed) and event.type == pygame.MOUSEBUTTONDOWN and score < HOUSE_COST) or (
+            if ((button_build_castle1.pressed) or (button_build_castle2.pressed) or (
+            button_build_castle3.pressed) and event.type == pygame.MOUSEBUTTONDOWN and score < HOUSE_COST) or (
                     button_build_water.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < WATER_COST) or (
                     button_build_electricity.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < ELECTRICITY_COST) or (
                     button_build_road.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < ROAD_COST) or (
@@ -423,14 +421,13 @@ while not finished:
                 text = 'not enough'
 
             # возвращает на страницу main при нажатии кнопки close
-            if button_build_close.pressed and event.type == pygame.MOUSEBUTTONDOWN or (event.type == pygame.MOUSEBUTTONDOWN and event.button == 3):
+            if button_build_close.pressed and event.type == pygame.MOUSEBUTTONDOWN:
                 page = 'main'
 
             if event.type == pygame.QUIT:
                 finished = True
-   
-    
-    time+=1
+
+    time += 1
 for b in buildings:
     print(b.level)
 pygame.quit()
