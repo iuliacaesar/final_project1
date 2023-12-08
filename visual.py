@@ -12,13 +12,42 @@ pygame.init()
 
 # Фон загружается лишь один раз в глабальную переменную, а потом лишь рисуется
 def load_fon():
-    global FON
+    global FON, road0, road1, road2, road3, road4, road5, road6, road7, road8, road9, road10, castle1, castle2, castle3, \
+        mile1, mile2, lake, star1, star2, star3, clouds, fonstarta
+
     FON = pygame.image.load('.\images\image.psd.png').convert_alpha()
+    road0 = pygame.image.load('.\images\дорога0.png').convert_alpha()
+    road1= pygame.image.load('.\images\дорога1.png').convert_alpha()
+    road2= pygame.image.load('.\images\дорога2.png').convert_alpha()
+    road3= pygame.image.load('.\images\дорога3.png').convert_alpha()
+    road4= pygame.image.load('.\images\дорога4.png').convert_alpha()
+    road5= pygame.image.load('.\images\дорога5.png').convert_alpha()
+    road6= pygame.image.load('.\images\дорога6.png').convert_alpha()
+    road7= pygame.image.load('.\images\дорога7.png').convert_alpha()
+    road8 = pygame.image.load('.\images\дорога8.png').convert_alpha()
+    road9 = pygame.image.load('.\images\дорога9.png').convert_alpha()
+    road10 = pygame.image.load('.\images\дорога10.png').convert_alpha()
+
+    castle1 = pygame.image.load('.\images\замок1.png').convert_alpha()
+    castle2 = pygame.image.load('.\images\замок2.png').convert_alpha()
+    castle3 = pygame.image.load('.\images\замок3.png').convert_alpha()
+
+    mile1 = pygame.image.load('.\images\ресурс2.png').convert_alpha()
+    mile2 = pygame.image.load('.\images\мельница1.png').convert_alpha()
+
+    lake = pygame.image.load('.\images\ресурс1.png').convert_alpha()
+
+    star1 = pygame.image.load('.\images\звезда1.png').convert_alpha()
+    star2 = pygame.image.load('.\images\звезда2.png').convert_alpha()
+    star3 = pygame.image.load('.\images\звезда3.png').convert_alpha()
+
+    clouds=pygame.image.load(".\images\\CloudsBG.jpg").convert_alpha()
+    fonstarta=pygame.image.load(".\images\\фонстарта.jpg").convert_alpha()
 
 
 
 def draw_fon_start(screen, time):
-    image = pygame.image.load(".\images\\фонстарта.jpg").convert_alpha()
+    image = fonstarta
     scaled_image = pygame.transform.scale(image, (WIDTH, HEIGHT))
     screen.blit(scaled_image, (0, 0))
     draw_rules(screen, time)
@@ -37,7 +66,7 @@ def draw_rules(screen, time):
     blit_text(screen, beginningtext, (150, 150), font)
 
 def draw_fon_menu(screen):
-    image = pygame.image.load(".\images\\CloudsBG.jpg").convert_alpha()
+    image = clouds
     scaled_image = pygame.transform.scale(image, (WIDTH, HEIGHT))
     screen.blit(scaled_image, (0, 0))
 
@@ -69,62 +98,70 @@ def draw_building(screen, b):
     x=b.x
     y=b.y
     if type(b).__name__=="Buildings":
-        name_of_image=".\images\\" + "замок"+str(b.type)+".png"
+        if b.type == 1:
+            image=castle1
+        elif b.type==2:
+            image=castle2
+        elif b.type==3:
+            image=castle3
         size_of_image=150
         position_y=-60
     if type(b).__name__ == "Resources":
-        name_of_image = ".\images\\" + "ресурс" + str(b.type) + ".png"
+        if b.type==1:
+            image=lake
+        elif b.type==2:
+            image=mile1
         size_of_image=75
         position_y=-0
 
 
     if type(b).__name__ == "Roads":
-        name_of_doroga = "1"
         if b.type ==[1, 0, 1, 0] or b.type == [1, 0, 0, 0] or b.type == [0, 0, 1, 0]:
-            name_of_doroga="0"
+            image=road0
         elif b.type ==[0, 1, 0, 1] or b.type == [0, 0, 0, 0] or b.type == [0, 1, 0, 0] or b.type == [0, 0, 0, 1]:
-            name_of_doroga="1"
+            image=road1
         elif b.type ==[1, 1, 1, 0]:
-            name_of_doroga="2"
+            image=road2
         elif b.type ==[0, 1, 1, 1]:
-            name_of_doroga="3"
+            image=road3
         elif b.type ==[1, 0, 1, 1]:
-            name_of_doroga="4"
+            image=road4
         elif b.type ==[1, 1, 0, 1]:
-            name_of_doroga="5"
+            image=road5
         elif b.type ==[1, 1, 1, 1]:
-            name_of_doroga="6"
+            image=road6
         elif b.type ==[1, 1, 0, 0]:
-            name_of_doroga="7"
+            image=road7
         elif b.type ==[0, 1, 1, 0]:
-            name_of_doroga="8"
+            image=road8
         elif b.type ==[0, 0, 1, 1]:
-            name_of_doroga="9"
+            image=road9
         elif b.type  == [1, 0,  0,  1]:
-            name_of_doroga = "10"
-
-        name_of_image = ".\images\\" + "дорога"+name_of_doroga + ".png"
+            image=road10
         size_of_image=75
         position_y=0
 
-    image = pygame.image.load(name_of_image).convert_alpha()
     temp_surface = pygame.Surface([image.get_width(), image.get_height()], pygame.SRCALPHA)
     temp_surface.blit(image, [0, 0])
     scaled_image = pygame.transform.scale(image, (size_of_image, size_of_image))
     screen.blit(scaled_image, (x, y+position_y))
 
     if type(b).__name__ == "Buildings":
-        name_of_zvezda=".\images\\" + "звезда"+str(b.level)+".png"
-        image1 = pygame.image.load(name_of_zvezda).convert_alpha()
+        if b.level==1:
+            image1=star1
+        elif b.level==2:
+            image1=star2
+        elif b.level==3:
+            image1=star3
         temp_surface.blit(image1, [0, 0])
         scaled_image1 = pygame.transform.scale(image1, (150, 150))
         screen.blit(scaled_image1, (x, y + position_y / 2))
     if type(b).__name__ == "Resources":
-        name_of_image = ".\images\\" + "ресурс" + str(b.type) + ".png"
+        image = mile2
         size_of_image=75
         position_y=-0
         if b.type==2:
-            image = pygame.image.load(".\images\мельница1.png").convert_alpha()
+            image = mile2
             scaled_image = pygame.transform.scale(image, (size_of_image, size_of_image))
             image = pygame.transform.rotate(scaled_image, b.angle)
             b.angle+=2
