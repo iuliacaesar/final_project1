@@ -80,9 +80,9 @@ def draw_building(screen, b):
 
     if type(b).__name__ == "Roads":
         name_of_doroga = "1"
-        if b.type ==[1, 0, 1, 0]:
+        if b.type ==[1, 0, 1, 0] or b.type == [1, 0, 0, 0] or b.type == [0, 0, 1, 0]:
             name_of_doroga="0"
-        elif b.type ==[0, 1, 0, 1]:
+        elif b.type ==[0, 1, 0, 1] or b.type == [0, 0, 0, 0] or b.type == [0, 1, 0, 0] or b.type == [0, 0, 0, 1]:
             name_of_doroga="1"
         elif b.type ==[1, 1, 1, 0]:
             name_of_doroga="2"
