@@ -72,7 +72,7 @@ class Resources():
 class Roads():
     def __init__(self, x, y, type, screen):
         self.screen = screen
-        self.type =  type
+        self.type = type
         self.x = x
         self.y = y
 

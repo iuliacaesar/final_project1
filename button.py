@@ -21,6 +21,7 @@ class Button:
         self.size_text = size_text
         self.color_text = color_text
         self.pressed = False
+        self.time=1
 
 
 
@@ -51,6 +52,8 @@ class Button:
             text = font.render(self.text, True, self.color_text)
             text_rect = text.get_rect(center=(self.x + self.width // 2, self.y + self.height // 2))
             window.blit(text, text_rect)
+        elif self.text=="ХУЙ":
+            draw_huina(self, window)
 
 
         else:

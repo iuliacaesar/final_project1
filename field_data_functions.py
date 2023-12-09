@@ -83,46 +83,48 @@ def check_the_place(what_you_build, building_data, x, y):
         if y // len_height + ROAD_HIGHT // len_height > HEIGHT // len_height or x // len_width + ROAD_LEN // len_width > WIDTH // len_width:
             flag = False
         else:
-            if building_data[y // len_height][x // len_width] != None and building_data[y // len_height][x // len_width] != 1:
+            if building_data[y // len_height][x // len_width] != None and building_data[y // len_height][
+                x // len_width] != 1:
                 if type(building_data[y // len_height][x // len_width]).__name__ == "Roads":
                     flag = False
     return flag
 
+
 def proverka_of_road(building_data, x, y, obj):
-
-    x=x // len_width
-    y=y // len_height
-    s=[2,2,2,2]
-    if type(building_data[y-1][x]).__name__=="Roads":
-        if building_data[y-1][x].type[2]==1:
-            s[0]=1
+    x = x // len_width
+    y = y // len_height
+    s = [2, 2, 2, 2]
+    if type(building_data[y - 1][x]).__name__ == "Roads":
+        if building_data[y - 1][x].type[2] == 1:
+            s[0] = 1
         else:
-            s[0]=0
+            s[0] = 0
 
-    if type(building_data[y][x+1]).__name__=="Roads":
-        if building_data[y][x+1].type[3]==1:
-            s[1]=1
+    if type(building_data[y][x + 1]).__name__ == "Roads":
+        if building_data[y][x + 1].type[3] == 1:
+            s[1] = 1
         else:
-            s[1]=0
+            s[1] = 0
 
-    if type(building_data[y+1][x]).__name__=="Roads":
-        if building_data[y+1][x].type[0]==1:
-            s[2]=1
+    if type(building_data[y + 1][x]).__name__ == "Roads":
+        if building_data[y + 1][x].type[0] == 1:
+            s[2] = 1
         else:
-            s[2]=0
+            s[2] = 0
 
-    if type(building_data[y][x-1]).__name__=="Roads":
-        if building_data[y][x-1].type[1]==1:
-            s[3]=1
+    if type(building_data[y][x - 1]).__name__ == "Roads":
+        if building_data[y][x - 1].type[1] == 1:
+            s[3] = 1
         else:
-            s[3]=0
+            s[3] = 0
 
-    t=True
+    t = True
 
     for i in range(4):
-        if (obj.type[i]==1 and s[i]==0) or (obj.type[i]==0 and s[i]==1):
-           t=False
+        if (obj.type[i] == 1 and s[i] == 0) or (obj.type[i] == 0 and s[i] == 1):
+            t = False
     return t
+
 
 def which_road(x, y, building_data):
     '''
@@ -133,188 +135,188 @@ def which_road(x, y, building_data):
     '''
     x = int(x // len_width)
     y = int(y // len_height)
-    field_end = x-1 < 0 or y-1 < 0 or x+1 > len(building_data[0])-1 or y+1> len(building_data)-1
-    type_ =[0, 0, 0, 0]
+    field_end = x - 1 < 0 or y - 1 < 0 or x + 1 > len(building_data[0]) - 1 or y + 1 > len(building_data) - 1
+    type_ = [0, 0, 0, 0]
     # type(building_data[x][y-1].__name__=="Buildings" or type(building_data[x][y+1]).__name__=="Roads"
-    if not(field_end):
-        if building_data[y-1][x] != None:  
-            if type(building_data[y-1][x]).__name__=="Roads":
+    if not (field_end):
+        if building_data[y - 1][x] != None:
+            if type(building_data[y - 1][x]).__name__ == "Roads":
                 type_[0] = 1
-                privios_road = building_data[y-1][x]
+                privios_road = building_data[y - 1][x]
                 privios_road.type[2] = 1
-        if building_data[y+1][x] != None: 
-            if type(building_data[y+1][x]).__name__=="Roads": 
+        if building_data[y + 1][x] != None:
+            if type(building_data[y + 1][x]).__name__ == "Roads":
                 type_[2] = 1
-                privios_road = building_data[y+1][x]
-                privios_road.type[0] = 1                
-        if building_data[y][x+1] != None: 
-            if type(building_data[y][x+1]).__name__=="Roads": 
+                privios_road = building_data[y + 1][x]
+                privios_road.type[0] = 1
+        if building_data[y][x + 1] != None:
+            if type(building_data[y][x + 1]).__name__ == "Roads":
                 type_[1] = 1
-                privios_road = building_data[y][x+1]
-                privios_road.type[3] = 1                
-        if building_data[y][x-1] != None: 
-            if type(building_data[y][x-1]).__name__=="Roads":
+                privios_road = building_data[y][x + 1]
+                privios_road.type[3] = 1
+        if building_data[y][x - 1] != None:
+            if type(building_data[y][x - 1]).__name__ == "Roads":
                 type_[3] = 1
-                privios_road = building_data[y][x-1]
+                privios_road = building_data[y][x - 1]
                 privios_road.type[1] = 1
 
-    elif x-1 < 0:
-        if y-1 < 0:
-            if building_data[y+1][x] != None:
-                if type(building_data[y+1][x]).__name__=="Roads": 
+    elif x - 1 < 0:
+        if y - 1 < 0:
+            if building_data[y + 1][x] != None:
+                if type(building_data[y + 1][x]).__name__ == "Roads":
                     type_[2] = 1
-                    privios_road = building_data[y+1][x]
-                    privios_road.type[0] = 1 
-            if building_data[y][x+1] != None:  
-                if type(building_data[y][x+1]).__name__=="Roads": 
+                    privios_road = building_data[y + 1][x]
+                    privios_road.type[0] = 1
+            if building_data[y][x + 1] != None:
+                if type(building_data[y][x + 1]).__name__ == "Roads":
                     type_[1] = 1
-                    privios_road = building_data[y][x+1]
-                    privios_road.type[3] = 1  
-        elif y+1> len(building_data)-1:
-            if building_data[y-1][x] != None: 
-                if type(building_data[y-1][x]).__name__=="Roads":
+                    privios_road = building_data[y][x + 1]
+                    privios_road.type[3] = 1
+        elif y + 1 > len(building_data) - 1:
+            if building_data[y - 1][x] != None:
+                if type(building_data[y - 1][x]).__name__ == "Roads":
                     type_[0] = 1
-                    privios_road = building_data[y-1][x]
-                    privios_road.type[2] = 1       
-            if building_data[y][x+1] != None:  
-                if type(building_data[y][x+1]).__name__=="Roads": 
-                    type_[1] = 1
-                    privios_road = building_data[y][x+1]
-                    privios_road.type[3] = 1  
-        else:
-            if building_data[y-1][x] != None: 
-                if type(building_data[y-1][x]).__name__=="Roads":
-                    type_[0] = 1
-                    privios_road = building_data[y-1][x]
+                    privios_road = building_data[y - 1][x]
                     privios_road.type[2] = 1
-            if building_data[y+1][x] != None:
-                if type(building_data[y+1][x]).__name__=="Roads": 
-                    type_[2] = 1
-                    privios_road = building_data[y+1][x]
-                    privios_road.type[0] = 1 
-            if building_data[y][x+1] != None:  
-                if type(building_data[y][x+1]).__name__=="Roads": 
+            if building_data[y][x + 1] != None:
+                if type(building_data[y][x + 1]).__name__ == "Roads":
                     type_[1] = 1
-                    privios_road = building_data[y][x+1]
-                    privios_road.type[3] = 1  
-    elif x+1 > len(building_data[0])-1:
-        if y-1 < 0:
-            if building_data[y+1][x] != None:
-                if type(building_data[y+1][x]).__name__=="Roads": 
-                    type_[2] = 1
-                    privios_road = building_data[y+1][x]
-                    privios_road.type[0] = 1 
-            if building_data[y][x-1] != None: 
-                if type(building_data[y][x-1]).__name__=="Roads":
-                    type_[3] = 1
-                    privios_road = building_data[y][x-1]
-                    privios_road.type[1] = 1
-        elif y+1> len(building_data)-1:
-            if building_data[y-1][x] != None: 
-                if type(building_data[y-1][x]).__name__=="Roads":
-                    type_[0] = 1
-                    privios_road = building_data[y-1][x]
-                    privios_road.type[2] = 1       
-            if building_data[y][x-1] != None: 
-                if type(building_data[y][x-1]).__name__=="Roads":
-                    type_[3] = 1
-                    privios_road = building_data[y][x-1]
-                    privios_road.type[1] = 1
+                    privios_road = building_data[y][x + 1]
+                    privios_road.type[3] = 1
         else:
-            if building_data[y-1][x] != None: 
-                if type(building_data[y-1][x]).__name__=="Roads":
+            if building_data[y - 1][x] != None:
+                if type(building_data[y - 1][x]).__name__ == "Roads":
                     type_[0] = 1
-                    privios_road = building_data[y-1][x]
+                    privios_road = building_data[y - 1][x]
                     privios_road.type[2] = 1
-            if building_data[y+1][x] != None:
-                if type(building_data[y+1][x]).__name__=="Roads": 
+            if building_data[y + 1][x] != None:
+                if type(building_data[y + 1][x]).__name__ == "Roads":
                     type_[2] = 1
-                    privios_road = building_data[y+1][x]
-                    privios_road.type[0] = 1 
-            if building_data[y][x-1] != None: 
-                if type(building_data[y][x-1]).__name__=="Roads":
-                    type_[3] = 1
-                    privios_road = building_data[y][x-1]
-                    privios_road.type[1] = 1
-    elif y-1 < 0:
-        if x-1 < 0:
-            if building_data[y+1][x] != None:
-                if type(building_data[y+1][x]).__name__=="Roads": 
-                    type_[2] = 1
-                    privios_road = building_data[y+1][x]
-                    privios_road.type[0] = 1 
-            if building_data[y][x+1] != None:  
-                if type(building_data[y][x+1]).__name__=="Roads": 
+                    privios_road = building_data[y + 1][x]
+                    privios_road.type[0] = 1
+            if building_data[y][x + 1] != None:
+                if type(building_data[y][x + 1]).__name__ == "Roads":
                     type_[1] = 1
-                    privios_road = building_data[y][x+1]
-                    privios_road.type[3] = 1  
-        elif x+1> len(building_data[0])-1:
-            if building_data[y+1][x] != None:
-                if type(building_data[y+1][x]).__name__=="Roads": 
+                    privios_road = building_data[y][x + 1]
+                    privios_road.type[3] = 1
+    elif x + 1 > len(building_data[0]) - 1:
+        if y - 1 < 0:
+            if building_data[y + 1][x] != None:
+                if type(building_data[y + 1][x]).__name__ == "Roads":
                     type_[2] = 1
-                    privios_road = building_data[y+1][x]
-                    privios_road.type[0] = 1      
-            if building_data[y][x-1] != None: 
-                if type(building_data[y][x-1]).__name__=="Roads":
+                    privios_road = building_data[y + 1][x]
+                    privios_road.type[0] = 1
+            if building_data[y][x - 1] != None:
+                if type(building_data[y][x - 1]).__name__ == "Roads":
                     type_[3] = 1
-                    privios_road = building_data[y][x-1]
+                    privios_road = building_data[y][x - 1]
+                    privios_road.type[1] = 1
+        elif y + 1 > len(building_data) - 1:
+            if building_data[y - 1][x] != None:
+                if type(building_data[y - 1][x]).__name__ == "Roads":
+                    type_[0] = 1
+                    privios_road = building_data[y - 1][x]
+                    privios_road.type[2] = 1
+            if building_data[y][x - 1] != None:
+                if type(building_data[y][x - 1]).__name__ == "Roads":
+                    type_[3] = 1
+                    privios_road = building_data[y][x - 1]
                     privios_road.type[1] = 1
         else:
-            if building_data[y][x+1] != None:  
-                if type(building_data[y][x+1]).__name__=="Roads": 
-                    type_[1] = 1
-                    privios_road = building_data[y][x+1]
-                    privios_road.type[3] = 1  
-            if building_data[y+1][x] != None:
-                if type(building_data[y+1][x]).__name__=="Roads": 
-                    type_[2] = 1
-                    privios_road = building_data[y+1][x]
-                    privios_road.type[0] = 1 
-            if building_data[y][x-1] != None: 
-                if type(building_data[y][x-1]).__name__=="Roads":
-                    type_[3] = 1
-                    privios_road = building_data[y][x-1]
-                    privios_road.type[1] = 1     
-    elif y+1 > len(building_data)-1:
-        if x-1 < 0:
-            if building_data[y-1][x] != None: 
-                if type(building_data[y-1][x]).__name__=="Roads":
+            if building_data[y - 1][x] != None:
+                if type(building_data[y - 1][x]).__name__ == "Roads":
                     type_[0] = 1
-                    privios_road = building_data[y-1][x]
+                    privios_road = building_data[y - 1][x]
                     privios_road.type[2] = 1
-            if building_data[y][x+1] != None:  
-                if type(building_data[y][x+1]).__name__=="Roads": 
-                    type_[1] = 1
-                    privios_road = building_data[y][x+1]
-                    privios_road.type[3] = 1  
-        elif x+1> len(building_data[0])-1:
-            if building_data[y-1][x] != None: 
-                if type(building_data[y-1][x]).__name__=="Roads":
-                    type_[0] = 1
-                    privios_road = building_data[y-1][x]
-                    privios_road.type[2] = 1       
-            if building_data[y][x-1] != None: 
-                if type(building_data[y][x-1]).__name__=="Roads":
+            if building_data[y + 1][x] != None:
+                if type(building_data[y + 1][x]).__name__ == "Roads":
+                    type_[2] = 1
+                    privios_road = building_data[y + 1][x]
+                    privios_road.type[0] = 1
+            if building_data[y][x - 1] != None:
+                if type(building_data[y][x - 1]).__name__ == "Roads":
                     type_[3] = 1
-                    privios_road = building_data[y][x-1]
+                    privios_road = building_data[y][x - 1]
+                    privios_road.type[1] = 1
+    elif y - 1 < 0:
+        if x - 1 < 0:
+            if building_data[y + 1][x] != None:
+                if type(building_data[y + 1][x]).__name__ == "Roads":
+                    type_[2] = 1
+                    privios_road = building_data[y + 1][x]
+                    privios_road.type[0] = 1
+            if building_data[y][x + 1] != None:
+                if type(building_data[y][x + 1]).__name__ == "Roads":
+                    type_[1] = 1
+                    privios_road = building_data[y][x + 1]
+                    privios_road.type[3] = 1
+        elif x + 1 > len(building_data[0]) - 1:
+            if building_data[y + 1][x] != None:
+                if type(building_data[y + 1][x]).__name__ == "Roads":
+                    type_[2] = 1
+                    privios_road = building_data[y + 1][x]
+                    privios_road.type[0] = 1
+            if building_data[y][x - 1] != None:
+                if type(building_data[y][x - 1]).__name__ == "Roads":
+                    type_[3] = 1
+                    privios_road = building_data[y][x - 1]
                     privios_road.type[1] = 1
         else:
-            if building_data[y-1][x] != None: 
-                if type(building_data[y-1][x]).__name__=="Roads":
-                    type_[0] = 1
-                    privios_road = building_data[y-1][x]
-                    privios_road.type[2] = 1
-            if building_data[y][x+1] != None:  
-                if type(building_data[y][x+1]).__name__=="Roads": 
+            if building_data[y][x + 1] != None:
+                if type(building_data[y][x + 1]).__name__ == "Roads":
                     type_[1] = 1
-                    privios_road = building_data[y][x+1]
-                    privios_road.type[3] = 1  
-            if building_data[y][x-1] != None: 
-                if type(building_data[y][x-1]).__name__=="Roads":
+                    privios_road = building_data[y][x + 1]
+                    privios_road.type[3] = 1
+            if building_data[y + 1][x] != None:
+                if type(building_data[y + 1][x]).__name__ == "Roads":
+                    type_[2] = 1
+                    privios_road = building_data[y + 1][x]
+                    privios_road.type[0] = 1
+            if building_data[y][x - 1] != None:
+                if type(building_data[y][x - 1]).__name__ == "Roads":
                     type_[3] = 1
-                    privios_road = building_data[y][x-1]
+                    privios_road = building_data[y][x - 1]
                     privios_road.type[1] = 1
-        
+    elif y + 1 > len(building_data) - 1:
+        if x - 1 < 0:
+            if building_data[y - 1][x] != None:
+                if type(building_data[y - 1][x]).__name__ == "Roads":
+                    type_[0] = 1
+                    privios_road = building_data[y - 1][x]
+                    privios_road.type[2] = 1
+            if building_data[y][x + 1] != None:
+                if type(building_data[y][x + 1]).__name__ == "Roads":
+                    type_[1] = 1
+                    privios_road = building_data[y][x + 1]
+                    privios_road.type[3] = 1
+        elif x + 1 > len(building_data[0]) - 1:
+            if building_data[y - 1][x] != None:
+                if type(building_data[y - 1][x]).__name__ == "Roads":
+                    type_[0] = 1
+                    privios_road = building_data[y - 1][x]
+                    privios_road.type[2] = 1
+            if building_data[y][x - 1] != None:
+                if type(building_data[y][x - 1]).__name__ == "Roads":
+                    type_[3] = 1
+                    privios_road = building_data[y][x - 1]
+                    privios_road.type[1] = 1
+        else:
+            if building_data[y - 1][x] != None:
+                if type(building_data[y - 1][x]).__name__ == "Roads":
+                    type_[0] = 1
+                    privios_road = building_data[y - 1][x]
+                    privios_road.type[2] = 1
+            if building_data[y][x + 1] != None:
+                if type(building_data[y][x + 1]).__name__ == "Roads":
+                    type_[1] = 1
+                    privios_road = building_data[y][x + 1]
+                    privios_road.type[3] = 1
+            if building_data[y][x - 1] != None:
+                if type(building_data[y][x - 1]).__name__ == "Roads":
+                    type_[3] = 1
+                    privios_road = building_data[y][x - 1]
+                    privios_road.type[1] = 1
+
     # if type_ == [0, 0, 0, 0] or type_ == [0, 1, 0, 0] or type_ == [0, 0, 0, 1] :
     #     type_ = [0, 1, 0, 1]
 
@@ -323,7 +325,7 @@ def which_road(x, y, building_data):
 
     # if building_data[y+1][x] == None and building_data[y-1][x] == None and building_data[x][y+1] == None and building_data[x][y+1] == None:
     #     return [0, 1, 0, 1]
-    
+
     return type_
 
 
@@ -333,9 +335,6 @@ def water_road_check(building_data, obj, buildings, resources):
     аргументы: массив с данными о постройках, водный провод, массив с постройками, массив с ресурсами
     возвращает: True - если водный провод соединил замок и озеро, False - если нет
     '''
-    
-
-
 
     obj_beginning = building_data[obj.beginning_y // len_height][obj.beginning_x // len_width]
     obj_ending = building_data[obj.ending_y // len_height][obj.ending_x // len_width]
@@ -344,12 +343,16 @@ def water_road_check(building_data, obj, buildings, resources):
             obj_beginning.level = min(obj_beginning.level + 1, 3)
     elif obj_beginning == 1:
         if obj_ending in resources and obj_ending.type == 1:
-            building_data[obj.beginning_y // len_height][obj.beginning_x // len_width - 1] = min(building_data[obj.beginning_y // len_height][obj.beginning_x // len_width - 1].level + 1, 3)
+            building_data[obj.beginning_y // len_height][obj.beginning_x // len_width - 1] = min(
+                building_data[obj.beginning_y // len_height][obj.beginning_x // len_width - 1].level + 1, 3)
     elif obj_beginning in resources and obj_beginning.type == 1:
         if obj_ending in buildings:
             obj_ending.level = min(obj_ending.level + 1, 3)
         elif obj_ending == 1:
-            building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1] = min(building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1].level + 1, 3)
+            building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1] = min(
+                building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1].level + 1, 3)
+
+
 '''
     if  obj_ending in resources:
         if obj_ending.type == 1:
@@ -363,11 +366,7 @@ def water_road_check(building_data, obj, buildings, resources):
                 obj_ending.level = min(obj_ending.level + 1, 3)
             if obj_ending == 1:
                 building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1] = min(building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1].level + 1, 3)
- '''   
-
-
-
-
+ '''
 
 '''
 def check_for_the_object(building_data, obj, buildings, resources, resource_roads):
@@ -379,8 +378,8 @@ def check_for_the_object(building_data, obj, buildings, resources, resource_road
             elif obj in resources and building_data[wr.beginning_y // len_height][wr.beginning_x // len_width] in buildings:
                 if building_data[wr.beginning_y // len_height][wr.beginning_x // len_width].type == 1:
                     building_data[wr.beginning_y // len_height][wr.beginning_x // len_width].level = min(building_data[wr.beginning_y // len_height][wr.beginning_x // len_width].level + 1, 3)
-        
-'''           
+
+'''
 
 
 
@@ -406,4 +405,3 @@ def check_for_the_object(building_data, obj, buildings, resources, resource_road
 
 
 
-        

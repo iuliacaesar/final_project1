@@ -75,6 +75,7 @@ clock = pygame.time.Clock()
 load_fon()
 time = 0
 
+huyni=[]
 while not finished:
     real_fps = int(clock.get_fps())
     clock.tick(FPS)
@@ -146,11 +147,21 @@ while not finished:
         screen.blit(fps_label, (20, HEIGHT - 20))
 
         for s in roads:
-            draw_building(screen, s)
+            draw_road(screen, s)
         for b in buildings:
             draw_building(screen, b)
+            if b.time>=100:
+                button_huyna = Button(b.x+75, b.y-75, width=40, height=40,
+                                      color_text=(0, 0, 0), text='ХУЙ', size_text=20)
+                if huyni.count(button_huyna)<1:
+                    huyni.append(button_huyna)
+                b.time=0
+            else:
+                b.time+=1
+        for t in huyni:
+            t.draw(window=screen)
         for r in resources:
-            draw_building(screen, r)
+            draw_resources(screen, r)
         for p in parks:
             draw_park(screen, p)
 
@@ -178,11 +189,17 @@ while not finished:
         pygame.display.update()
 
         for event in pygame.event.get():
+            for b in huyni:
+                b.get_pressed(event)
+                if b.pressed and event.type == pygame.MOUSEBUTTONDOWN:
+                    huyni.remove(b)
+                    score+=10*building_data[(b.y+75)//len_height][(b.x-75)//len_width].level
             button_save.get_pressed(event)
             if button_save.pressed and event.type == pygame.MOUSEBUTTONDOWN:
                 save_to_file()
                 text = 'save'
                 texttime = pygame.time.get_ticks()
+
             if event.type == pygame.QUIT:
                 finished = True
             # если на странице main нажать правую кнопку мыши, открывается окно build
@@ -199,11 +216,11 @@ while not finished:
         screen.blit(fps_label, (20, HEIGHT - 20))
 
         for s in roads:
-            draw_building(screen, s)
+            draw_road(screen, s)
         for b in buildings:
             draw_building(screen, b)
         for r in resources:
-            draw_building(screen, r)
+            draw_resources(screen, r)
         for p in parks:
             draw_park(screen, p)
 
