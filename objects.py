@@ -52,8 +52,8 @@ class Buildings():
         self.level = level
         self.x = x
         self.y = y
-        self.time=0
-        self.monstr_time=random.randint(1000,10000)
+        self.time=1
+        self.monstr_time=random.randint(500,2000)
 
     '''
     type - тип здания

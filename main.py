@@ -151,7 +151,7 @@ while not finished:
         for b in buildings:
             ''' Цикл проверяет есть ли уже монстры и ресурсы у замка, если их нет но пришло их время, то создает и рисует их вместе с замком'''
             draw_building(screen, b[0])
-            if b[0].time%500==0 and b[1]==None:
+            if b[0].time%300==0 and b[1]==None:
                 b[1]=button_huyna = Button(b[0].x + 75, b[0].y - 75, width=40, height=40,
                                           color_text=(0, 0, 0), text='ХУЙ', size_text=20)
             if b[0].time%b[0].monstr_time==0 and b[2]==None:
