@@ -54,6 +54,8 @@ class Button:
             window.blit(text, text_rect)
         elif self.text=="ХУЙ":
             draw_huina(self, window)
+        elif self.text=="MONSTR":
+            draw_monstr(self, window)
 
 
         else:

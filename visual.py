@@ -15,7 +15,8 @@ pygame.init()
 def load_fon():
     global FON, road0, road1, road2, road3, road4, road5, road6, road7, road8, road9, road10, castle1, castle2, castle3, \
         mile1, mile2, lake, star1, star2, star3, clouds, fonstarta, button_castle1, button_castle2, button_castle3, \
-        button_lake, button_mile, button_road, button_park, button_water, but_h1, but_h2, but_h3, but_h4, but_h5, but_h6, but_h7
+        button_lake, button_mile, button_road, button_park, button_water, but_h1, but_h2, but_h3, but_h4, but_h5, but_h6, but_h7, \
+        but_m1, but_m2, but_m3, but_m4, but_m5, but_m6, but_m7
 
     FON = pygame.image.load('.\images\image.psd.png').convert_alpha()
     road0 = pygame.image.load('.\images\дорога0.png').convert_alpha()
@@ -63,6 +64,35 @@ def load_fon():
     but_h6 = pygame.image.load(".\images\\11zon_6.png").convert_alpha()
     but_h7 = pygame.image.load(".\images\\11zon_7.png").convert_alpha()
 
+    but_m1 = pygame.image.load(".\images\\1.png").convert_alpha()
+    but_m2 = pygame.image.load(".\images\\2.png").convert_alpha()
+    but_m3 = pygame.image.load(".\images\\3.png").convert_alpha()
+    but_m4 = pygame.image.load(".\images\\4.png").convert_alpha()
+    but_m5 = pygame.image.load(".\images\\5.png").convert_alpha()
+    but_m6 = pygame.image.load(".\images\\6.png").convert_alpha()
+    but_m7 = pygame.image.load(".\images\\7.png").convert_alpha()
+
+def draw_monstr(but, window):
+    if int(but.time) == 1:
+        image = but_m1
+    elif int(but.time) == 2:
+        image = but_m2
+    elif int(but.time) == 3:
+        image = but_m3
+    elif int(but.time) == 4:
+        image = but_m4
+    elif int(but.time) == 5:
+        image = but_m5
+    elif int(but.time) == 6:
+        image = but_m6
+    elif int(but.time) == 7:
+        image = but_m7
+        but.time=1
+    but.time+=0.25
+    temp_surface = pygame.Surface([100, 100], pygame.SRCALPHA)
+    temp_surface.blit(image, [0, 0])
+    scaled_image = pygame.transform.scale(image, (but.width, but.height))
+    window.blit(scaled_image, (but.x, but.y))
 def draw_huina(but, window):
     if int(but.time) == 1:
         image = but_h1

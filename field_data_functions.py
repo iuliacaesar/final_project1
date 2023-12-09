@@ -1,3 +1,5 @@
+import random
+
 WIDTH = 1200
 HEIGHT = 750
 len_width = int(WIDTH / (16))
@@ -351,6 +353,16 @@ def water_road_check(building_data, obj, buildings, resources):
         elif obj_ending == 1:
             building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1] = min(
                 building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1].level + 1, 3)
+
+def place_for_monstr(building, building_data):
+    '''Функция находит свободное место рядом с замком, чтобы впихнуть монстра и возвращает координаты пустой клетки'''
+    i=random.randint(building.x//len_width-1, building.x//len_width+1)
+    j = random.randint(building.y // len_height - 1,  building.y // len_height + 1)
+    if building_data[j][i]==None:
+        return (i*len_width, j*len_height)
+    return(0, 0)
+
+
 
 
 '''

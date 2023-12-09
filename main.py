@@ -56,6 +56,7 @@ resources = []
 roads = []
 parks = []
 resource_roads = []
+monstrs=[]
 water = 0
 electricity = 0
 score = 310
@@ -75,7 +76,6 @@ clock = pygame.time.Clock()
 load_fon()
 time = 0
 
-huyni=[]
 while not finished:
     real_fps = int(clock.get_fps())
     clock.tick(FPS)
@@ -149,17 +149,23 @@ while not finished:
         for s in roads:
             draw_road(screen, s)
         for b in buildings:
-            draw_building(screen, b)
-            if b.time>=100:
-                button_huyna = Button(b.x+75, b.y-75, width=40, height=40,
-                                      color_text=(0, 0, 0), text='ХУЙ', size_text=20)
-                if huyni.count(button_huyna)<1:
-                    huyni.append(button_huyna)
-                b.time=0
-            else:
-                b.time+=1
-        for t in huyni:
-            t.draw(window=screen)
+            ''' Цикл проверяет есть ли уже монстры и ресурсы у замка, если их нет но пришло их время, то создает и рисует их вместе с замком'''
+            draw_building(screen, b[0])
+            if b[0].time%500==0 and b[1]==None:
+                b[1]=button_huyna = Button(b[0].x + 75, b[0].y - 75, width=40, height=40,
+                                          color_text=(0, 0, 0), text='ХУЙ', size_text=20)
+            if b[0].time%b[0].monstr_time==0 and b[2]==None:
+                if b[0].level>1:
+                    b[0].level-=1
+                b[2]=button_monstr = Button(place_for_monstr(b[0], building_data)[0],
+                                           place_for_monstr(b[0], building_data)[1], width=75, height=75,
+                                           color_text=(0, 0, 0), text='MONSTR', size_text=20)
+                building_data=add_data("house", building_data, b[2])
+            if b[2]!=None:
+                b[2].draw(window=screen)
+            if b[1]!=None:
+                b[1].draw(window=screen)
+            b[0].time+=1
         for r in resources:
             draw_resources(screen, r)
         for p in parks:
@@ -189,11 +195,24 @@ while not finished:
         pygame.display.update()
 
         for event in pygame.event.get():
-            for b in huyni:
-                b.get_pressed(event)
-                if b.pressed and event.type == pygame.MOUSEBUTTONDOWN:
-                    huyni.remove(b)
-                    score+=10*building_data[(b.y+75)//len_height][(b.x-75)//len_width].level
+            for b in buildings:
+                '''проверяеи не нажат ли ресурс/ монстр рядом с каким либо замком'''
+                if b[2]!=None:
+                    b[2].get_pressed(event)
+                    if b[2].pressed and event.type == pygame.MOUSEBUTTONDOWN:
+                        varioty = random.randint(0, 1)
+                        if varioty == 1:
+                            b[2] = None
+                            if b[0].level==1:
+                                b[0].level+=1
+                        else:
+                            if score>=50:
+                                score -= 50
+                if b[1]!=None:
+                    b[1].get_pressed(event)
+                    if b[1].pressed and event.type == pygame.MOUSEBUTTONDOWN:
+                        b[1] = None
+                        score += 10 * b[0].level
             button_save.get_pressed(event)
             if button_save.pressed and event.type == pygame.MOUSEBUTTONDOWN:
                 save_to_file()
@@ -218,7 +237,7 @@ while not finished:
         for s in roads:
             draw_road(screen, s)
         for b in buildings:
-            draw_building(screen, b)
+            draw_building(screen, b[0])
         for r in resources:
             draw_resources(screen, r)
         for p in parks:
@@ -270,8 +289,8 @@ while not finished:
                 finished = True
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'house':
                 if check_the_place(what_you_build, building_data, mouse_x, mouse_y):
-                    new_home = Buildings(mouse_x, mouse_y, 1, 1, screen=screen)
-                    buildings.append(new_home)
+                    new_home = Buildings(mouse_x, mouse_y, type, 1, screen=screen)
+                    buildings.append([new_home, None, None])
                     building_data = add_data(what_you_build, building_data, new_home)
                     # print(building_data)
                     # print(building_data[new_home.y//len_height][new_home.x//len_width])
@@ -445,6 +464,5 @@ while not finished:
                 finished = True
 
     time += 1
-for b in buildings:
-    print(b.level)
+
 pygame.quit()

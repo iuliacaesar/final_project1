@@ -1,3 +1,5 @@
+import random
+
 import pygame
 from visual import *
 
@@ -51,6 +53,7 @@ class Buildings():
         self.x = x
         self.y = y
         self.time=0
+        self.monstr_time=random.randint(1000,10000)
 
     '''
     type - тип здания
