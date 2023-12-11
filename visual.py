@@ -305,7 +305,18 @@ def blit_text(surface, text, pos, font, color='black'):
             x += word_width + space
         x = pos[0]
         y += word_height
-
+def draw_water_road(screen, b):
+    wgh = 2.5
+    r = 5
+    pygame.draw.line(screen, (0, 155, 245), [int(b.beginning_x + len_width/2), int(b.beginning_y + len_height/2)], [int(b.ending_x+ len_width/2), int(b.ending_y+ len_height/2)], int(wgh))
+    pygame.draw.circle(
+        screen, (0, 155, 245),
+        (int(b.beginning_x + len_width/2), int(b.beginning_y + len_height/2)),
+        int(r))
+    pygame.draw.circle(
+        screen, (0, 155, 245),
+        (int(b.ending_x+ len_width/2), int(b.ending_y+ len_height/2)),
+        int(r))
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

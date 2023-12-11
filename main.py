@@ -134,7 +134,8 @@ while not finished:
         # FIXME-Лера-настройка
         button_save = Button(x=WIDTH * 0.8, y=HEIGHT * 0.9, width=BUTTON_WIDTH / 2, height=BUTTON_HIGHT/5*3,
                              color_text=BLACK, text='SAVE', size_text=20)
-
+        #!!!!!!!!!!!!!!!новая кнопка
+        button_underground = Button(WIDTH * 0.8, HEIGHT * 0.8, BUTTON_WIDTH / 2, BUTTON_HIGHT/5*3, (100, 0, 150, 100),'black','underground', 36)
         '''Эти функции рисования написаны по приколу, в дальнейшем функции 
         рисования объектов будут принимать только объект'''
         draw_fon(screen, 0, 0)
@@ -148,6 +149,8 @@ while not finished:
 
         for s in roads:
             draw_road(screen, s)
+        for w in resource_roads:
+            draw_water_road(screen, w)
         for b in buildings:
             ''' Цикл проверяет есть ли уже монстры и ресурсы у замка, если их нет но пришло их время, то создает и рисует их вместе с замком'''
             draw_building(screen, b[0])
@@ -172,7 +175,7 @@ while not finished:
             draw_park(screen, p)
 
         button_save.draw(window=screen)
-
+        button_underground.draw(window=screen)
         # FIXME-Лера-настройка
         font0 = pygame.font.SysFont(None, 64)
         img0 = font0.render('Cтраница - main', True, BLACK)
@@ -214,17 +217,36 @@ while not finished:
                         b[1] = None
                         score += 10 * b[0].level
             button_save.get_pressed(event)
+            button_underground.get_pressed(event)
             if button_save.pressed and event.type == pygame.MOUSEBUTTONDOWN:
                 save_to_file()
                 text = 'save'
                 texttime = pygame.time.get_ticks()
-
+                
+            if button_underground.pressed and event.type == pygame.MOUSEBUTTONDOWN:
+                page = 'underground'
+                
             if event.type == pygame.QUIT:
                 finished = True
             # если на странице main нажать правую кнопку мыши, открывается окно build
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                 page = 'build'
 
+
+
+
+    #страница nderground
+    if page == 'underground':
+        screen.fill(WHITE)
+        button_back=Button(WIDTH * 0.8, HEIGHT * 0.8, BUTTON_WIDTH / 2, BUTTON_HIGHT/5*3, (100, 0, 150, 100), 'black', 'underground', 36)
+        draw_button(screen, button_back)
+        button_back.get_pressed()
+        for event in pygame.event.get():
+            if button_back.pressed and event == pagame.MOUSEBUTTONDOWN:
+                paage = 'main'
+        for r in resource_roads:
+            draw_water_road(screen, r)
+        pygame.display.update()
     if page == 'process of build':
 
         draw_fon(screen, 0, 0)
@@ -343,11 +365,7 @@ while not finished:
                     print('error')
 
             # ==============================================================
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'water_road' and coordinates_type == 1:
-                mouse_x1, mouse_y1 = pygame.mouse.get_pos()
-                mouse_x1, mouse_y1 = get_xy(mouse_x1, mouse_y1)
-                coordinates_type = 2
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3 and what_you_build == 'water_road' and coordinates_type == 2:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'water_road' and coordinates_type == 2:
                 mouse_x2, mouse_y2 = pygame.mouse.get_pos()
                 mouse_x2, mouse_y2 = get_xy(mouse_x2, mouse_y2)
                 new_water_road = Resource_roads(mouse_x1, mouse_y1, mouse_x2, mouse_y2, 1, screen)
@@ -356,7 +374,12 @@ while not finished:
                 score -= WATER_ROAD_COST
                 water_road_check(building_data, new_water_road, buildings, resources)
                 page = 'main'
-
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'water_road' and coordinates_type == 1:
+                mouse_x1, mouse_y1 = pygame.mouse.get_pos()
+                mouse_x1, mouse_y1 = get_xy(mouse_x1, mouse_y1)
+                coordinates_type = 2
+            
+            
     if page == 'build':
 
         screen.fill(WHITE)

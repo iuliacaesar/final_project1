@@ -25,6 +25,8 @@ def check_score(score, what_you_build):
         return True
     if what_you_build == 'park' and score >= PARK_COST:
         return True
+    if what_you_build == 'water_road' and score >= WATER_ROAD_COST:
+        return True
     return False
 
 def get_score(what_you_build):
