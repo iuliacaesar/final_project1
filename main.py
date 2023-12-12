@@ -149,8 +149,8 @@ while not finished:
 
         for s in roads:
             draw_road(screen, s)
-        for w in resource_roads:
-            draw_water_road(screen, w)
+        #for w in resource_roads:
+            #draw_water_road(screen, w)
         for b in buildings:
             ''' Цикл проверяет есть ли уже монстры и ресурсы у замка, если их нет но пришло их время, то создает и рисует их вместе с замком'''
             draw_building(screen, b[0])
@@ -206,8 +206,9 @@ while not finished:
                         varioty = random.randint(0, 1)
                         if varioty == 1:
                             b[2] = None
-                            if b[0].level==1:
-                                b[0].level+=1
+                            if b[0].level == 1:
+                                b[0].m = 1
+                                b[0].level =b[0].m + b[0].park + b[0].water + b[0].electricity
                         else:
                             if score>=50:
                                 score -= 50
@@ -235,18 +236,25 @@ while not finished:
 
 
 
-    #страница nderground
+    #страница underground
     if page == 'underground':
         screen.fill(WHITE)
         button_back=Button(WIDTH * 0.8, HEIGHT * 0.8, BUTTON_WIDTH / 2, BUTTON_HIGHT/5*3, (100, 0, 150, 100), 'black', 'underground', 36)
-        draw_button(screen, button_back)
-        button_back.get_pressed()
+        button_back.draw(window=screen)
+        for w in resource_roads:
+            draw_water_road(screen, w)
+            
         for event in pygame.event.get():
-            if button_back.pressed and event == pagame.MOUSEBUTTONDOWN:
-                paage = 'main'
-        for r in resource_roads:
-            draw_water_road(screen, r)
+            button_back.get_pressed(event)
+            if button_back.pressed and event.type == pygame.MOUSEBUTTONDOWN:
+
+                page = 'main'
+        
         pygame.display.update()
+
+
+        
+        
     if page == 'process of build':
 
         draw_fon(screen, 0, 0)
@@ -264,6 +272,8 @@ while not finished:
             draw_resources(screen, r)
         for p in parks:
             draw_park(screen, p)
+        for w in resource_roads:
+            draw_water_road(screen, w)
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
         able = check_the_place(what_you_build, building_data, mouse_x, mouse_y)
@@ -316,7 +326,8 @@ while not finished:
                     building_data = add_data(what_you_build, building_data, new_home)
                     # print(building_data)
                     # print(building_data[new_home.y//len_height][new_home.x//len_width])
-                    what_you_build = 'nothing'
+                    park_check(building_data, new_home, buildings, parks)
+                    
                     score -= HOUSE_COST
                 else:
                     print('error')
@@ -359,7 +370,7 @@ while not finished:
                     # print(new_park.x, new_park.y)
                     building_data = add_data(what_you_build, building_data, new_park)
                     # print(building_data)
-
+                    park_check(building_data, new_park, buildings, parks)
                     score -= PARK_COST
                 else:
                     print('error')
@@ -370,9 +381,9 @@ while not finished:
                 mouse_x2, mouse_y2 = get_xy(mouse_x2, mouse_y2)
                 new_water_road = Resource_roads(mouse_x1, mouse_y1, mouse_x2, mouse_y2, 1, screen)
                 resource_roads.append(new_water_road)
-                what_you_build = 'nothing'
                 score -= WATER_ROAD_COST
                 water_road_check(building_data, new_water_road, buildings, resources)
+                check_resource_road_type(building_data, new_water_road, resources)
                 page = 'main'
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'water_road' and coordinates_type == 1:
                 mouse_x1, mouse_y1 = pygame.mouse.get_pos()

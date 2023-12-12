@@ -54,6 +54,10 @@ class Buildings():
         self.level = level
         self.x = x
         self.y = y
+        self.park = 0
+        self.water = 0
+        self.electricity = 0
+        self.m = 0
         self.time=1
         self.monstr_time=random.randint(500,2000)
 
@@ -72,7 +76,7 @@ class Resources():
         self.y = y
         self.time = 0
         self.angle = 0
-
+        self.castles = 0
 
 class Roads():
     def __init__(self, x, y, type, screen):

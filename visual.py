@@ -115,6 +115,7 @@ def draw_huina(but, window):
     scaled_image = pygame.transform.scale(image, (but.width, but.height))
     window.blit(scaled_image, (but.x, but.y))
 def draw_button(but, window):
+    #Лера, пожалуйста добавь кнопки для underground
     if but.text == "castle 1":
         image = button_castle1
     elif but.text == "castle 2":
@@ -277,7 +278,9 @@ def draw_resources(screen, b):
         screen.blit(image, (
             x + (-image.get_width() + size_of_image) / 2, y + position_y + (-image.get_height() + size_of_image) / 2))
 
-
+def draw_park(screen, p):
+    pygame.draw.rect(screen, (255, 255, 255), 
+                 (p.x, p.y, 75, 75))
 def process_building(screen, x, y, len_x, len_y, able):
     if able:
         color = (0, 255, 0, 100)
