@@ -5,12 +5,12 @@ from visual import *
 
 BLUE = (0, 119, 255)
 
-HOUSE_COST = 10
+HOUSE_COST = 100
 HOUSE_POFIT = 1
-ROAD_COST = 1
-PARK_COST = 20
-WATER_ROAD_COST = 1
-ELECTRICITY_ROAD_COST = 1
+ROAD_COST = 0
+PARK_COST = 70
+WATER_ROAD_COST = 10
+ELECTRICITY_ROAD_COST = 10
 WATER_COST = 50
 ELECTRICITY_COST = 50
 
@@ -40,6 +40,8 @@ def get_score(what_you_build):
         return ELECTRICITY_COST
     if what_you_build == 'park':
         return PARK_COST
+    if what_you_build == 'water_road':
+        return WATER_ROAD_COST
 
 
 class Buildings():
@@ -57,7 +59,7 @@ class Buildings():
         self.park = 0
         self.water = 0
         self.electricity = 0
-        self.m = 0
+        self.m = 1
         self.time=1
         self.monstr_time=random.randint(500,2000)
 

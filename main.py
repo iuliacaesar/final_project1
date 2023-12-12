@@ -1,7 +1,8 @@
 import math
 import random
 import random as rd
-import numpy as np
+"""import numpy as np
+"""
 from button import *
 from objects import *
 from visual import *
@@ -35,12 +36,13 @@ ELECTRICITY_HIGHT = len_height * 1
 PARK_LEN = len_width * 1
 PARK_HIGHT = len_height * 1
 
-HOUSE_COST = 10
+
+HOUSE_COST =100
 HOUSE_POFIT = 1
-ROAD_COST = 1
-PARK_COST = 20
-WATER_ROAD_COST = 1
-ELECTRICITY_ROAD_COST = 1
+ROAD_COST = 0
+PARK_COST = 70
+WATER_ROAD_COST = 10
+ELECTRICITY_ROAD_COST = 10
 WATER_COST = 50
 ELECTRICITY_COST = 50
 building_data = []
@@ -59,7 +61,7 @@ resource_roads = []
 monstrs=[]
 water = 0
 electricity = 0
-score = 310
+score = 300
 
 finished = False
 page = 'start'
@@ -135,7 +137,7 @@ while not finished:
         button_save = Button(x=WIDTH * 0.8, y=HEIGHT * 0.9, width=BUTTON_WIDTH / 2, height=BUTTON_HIGHT/5*3,
                              color_text=BLACK, text='SAVE', size_text=20)
         #!!!!!!!!!!!!!!!новая кнопка
-        button_underground = Button(WIDTH * 0.8, HEIGHT * 0.8, BUTTON_WIDTH / 2, BUTTON_HIGHT/5*3, (100, 0, 150, 100),'black','underground', 36)
+        button_underground = Button(WIDTH * 0.8, HEIGHT * 0.95, BUTTON_WIDTH / 2, BUTTON_HIGHT/5*3, (100, 0, 150, 100),'black','underground', 20)
         '''Эти функции рисования написаны по приколу, в дальнейшем функции 
         рисования объектов будут принимать только объект'''
         draw_fon(screen, 0, 0)
@@ -151,15 +153,18 @@ while not finished:
             draw_road(screen, s)
         #for w in resource_roads:
             #draw_water_road(screen, w)
+        for r in resources:
+            draw_resources(screen, r)
+        for p in parks:
+            draw_park(screen, p)
         for b in buildings:
             ''' Цикл проверяет есть ли уже монстры и ресурсы у замка, если их нет но пришло их время, то создает и рисует их вместе с замком'''
             draw_building(screen, b[0])
-            if b[0].time%300==0 and b[1]==None:
+            if b[0].time%400==0 and b[1]==None:
                 b[1]=button_huyna = Button(b[0].x + 75, b[0].y - 75, width=40, height=40,
                                           color_text=(0, 0, 0), text='ХУЙ', size_text=20)
             if b[0].time%b[0].monstr_time==0 and b[2]==None:
-                if b[0].level>1:
-                    b[0].level-=1
+                b[0].m=0
                 b[2]=button_monstr = Button(place_for_monstr(b[0], building_data)[0],
                                            place_for_monstr(b[0], building_data)[1], width=75, height=75,
                                            color_text=(0, 0, 0), text='MONSTR', size_text=20)
@@ -169,16 +174,14 @@ while not finished:
             if b[1]!=None:
                 b[1].draw(window=screen)
             b[0].time+=1
-        for r in resources:
-            draw_resources(screen, r)
-        for p in parks:
-            draw_park(screen, p)
+            b[0].level = b[0].m * min( max(1,  b[0].park + b[0].water + b[0].electricity), 3)
+
 
         button_save.draw(window=screen)
         button_underground.draw(window=screen)
         # FIXME-Лера-настройка
         font0 = pygame.font.SysFont(None, 64)
-        img0 = font0.render('Cтраница - main', True, BLACK)
+        img0 = font0.render('', True, BLACK)
         screen.blit(img0, (200, 20))
         font1 = pygame.font.SysFont(None, 24)
         img1 = font1.render('Вода:  ' + str(water), True, BLACK)
@@ -206,12 +209,11 @@ while not finished:
                         varioty = random.randint(0, 1)
                         if varioty == 1:
                             b[2] = None
-                            if b[0].level == 1:
-                                b[0].m = 1
-                                b[0].level =b[0].m + b[0].park + b[0].water + b[0].electricity
+                            b[0].m = 1
                         else:
                             if score>=50:
                                 score -= 50
+
                 if b[1]!=None:
                     b[1].get_pressed(event)
                     if b[1].pressed and event.type == pygame.MOUSEBUTTONDOWN:
@@ -233,17 +235,22 @@ while not finished:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                 page = 'build'
 
-
-
-
     #страница underground
     if page == 'underground':
-        screen.fill(WHITE)
-        button_back=Button(WIDTH * 0.8, HEIGHT * 0.8, BUTTON_WIDTH / 2, BUTTON_HIGHT/5*3, (100, 0, 150, 100), 'black', 'underground', 36)
+        draw_fon1(screen)
+        for s in roads:
+            draw_road(screen, s)
+        for p in parks:
+            draw_park(screen, p)
+        for r in resources:
+            draw_resources(screen, r)
+        for b in buildings:
+            b[0].level = b[0].m * min( max(1,  b[0].park + b[0].water + b[0].electricity), 3)
+            draw_building(screen, b[0])
+        button_back=Button(WIDTH * 0.8, HEIGHT * 0.95, BUTTON_WIDTH / 2, BUTTON_HIGHT/5*3, (100, 0, 150, 100), 'black', 'underground', 20)
         button_back.draw(window=screen)
         for w in resource_roads:
             draw_water_road(screen, w)
-            
         for event in pygame.event.get():
             button_back.get_pressed(event)
             if button_back.pressed and event.type == pygame.MOUSEBUTTONDOWN:
@@ -252,9 +259,6 @@ while not finished:
         
         pygame.display.update()
 
-
-        
-        
     if page == 'process of build':
 
         draw_fon(screen, 0, 0)
@@ -266,14 +270,15 @@ while not finished:
 
         for s in roads:
             draw_road(screen, s)
-        for b in buildings:
-            draw_building(screen, b[0])
-        for r in resources:
-            draw_resources(screen, r)
         for p in parks:
             draw_park(screen, p)
         for w in resource_roads:
             draw_water_road(screen, w)
+        for r in resources:
+            draw_resources(screen, r)
+        for b in buildings:
+            b[0].level = b[0].m * min( max(1,  b[0].park + b[0].water + b[0].electricity), 3)
+            draw_building(screen, b[0])
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
         able = check_the_place(what_you_build, building_data, mouse_x, mouse_y)
@@ -298,7 +303,7 @@ while not finished:
 
         # FIXME-Лера-настройка
         font0 = pygame.font.SysFont(None, 64)
-        img0 = font0.render('Cтраница - process of build', True, WHITE)
+        img0 = font0.render('', True, WHITE)
         img3 = font3.render('Счёт:  ' + str(score), True, WHITE)
         screen.blit(img3, (20, 80))
 
@@ -389,8 +394,7 @@ while not finished:
                 mouse_x1, mouse_y1 = pygame.mouse.get_pos()
                 mouse_x1, mouse_y1 = get_xy(mouse_x1, mouse_y1)
                 coordinates_type = 2
-            
-            
+
     if page == 'build':
 
         screen.fill(WHITE)
@@ -405,13 +409,15 @@ while not finished:
         button_build_road = Button(x=160, y=275, width=BUTTON_LEN , height=BUTTON_LEN, text='road')
         button_build_water = Button(x=840, y=40, width=BUTTON_LEN, height=BUTTON_LEN, text='lake')
         button_build_electricity = Button(x=840, y=275, width=BUTTON_LEN, height=BUTTON_LEN, text='mile')
-        button_build_close = Button(x=WIDTH * 0.8, y=HEIGHT * 0.9, width=BUTTON_WIDTH / 2, height=BUTTON_HIGHT/5*3,
+        button_build_close = Button(x=WIDTH * 0.9, y=HEIGHT * 0.9, width=BUTTON_WIDTH / 4, height=BUTTON_HIGHT/5*3,
                              color_text=BLACK, text='CLOSE', size_text=20)
         button_build_park = Button(x=160, y=40, width=BUTTON_LEN, height=BUTTON_LEN, text='park')
         button_build_castle1 = Button(x=500, y=40,  width=BUTTON_LEN, height=BUTTON_LEN, text='castle 1')
         button_build_castle2 = Button(x=500, y=275, width=BUTTON_LEN, height=BUTTON_LEN, text='castle 2')
         button_build_castle3 = Button(x=500, y=510, width=BUTTON_LEN, height=BUTTON_LEN, text='castle 3')
-        button_connect_water = Button(x=160, y=510, width=BUTTON_LEN, height=BUTTON_LEN, text='connect_water')
+        button_connect_water = Button(x=160, y=510, width=BUTTON_LEN, height=BUTTON_LEN, text='connect_objects')
+        button_destroy = Button(x=840, y=510, width=BUTTON_LEN, height=BUTTON_LEN, text='demolition')
+
 
 
         button_build_road.draw(window=screen)
@@ -423,13 +429,18 @@ while not finished:
         button_build_castle2.draw(window=screen)
         button_build_castle3.draw(window=screen)
         button_connect_water.draw(window=screen)
+        button_destroy.draw(window=screen)
 
         # FIXME-Лера-настройка
         if pygame.time.get_ticks() - texttime < 500 and text == 'not enough':
+            len_x=WIDTH*0.6
+            len_y=HEIGHT*0.2
+            temp_surface = pygame.Surface([len_x, len_y], pygame.SRCALPHA)
+            pygame.draw.rect(temp_surface, (150, 140, 255, 150), (0,0, len_x, len_y ), border_radius=20)
+            screen.blit(temp_surface, [WIDTH * 0.2, HEIGHT*0.4])
             font_ = pygame.font.SysFont(None, 40)
-            img_ = font_.render('Недостаточно счёта для строительства', True, BLACK)
-            screen.blit(img_, (WIDTH * 0.4, 10))
-
+            img_ = font_.render('Недостаточно счёта для строительства', True, (0, 0, 0))
+            screen.blit(img_, (WIDTH * 0.3, HEIGHT*0.475))
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -486,7 +497,8 @@ while not finished:
                     button_build_water.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < WATER_COST) or (
                     button_build_electricity.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < ELECTRICITY_COST) or (
                     button_build_road.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < ROAD_COST) or (
-                    button_build_park.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < PARK_COST):
+                    button_build_park.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < PARK_COST) or (
+                    button_connect_water.pressed and event.type == pygame.MOUSEBUTTONDOWN and score < WATER_ROAD_COST):
                 texttime = pygame.time.get_ticks()
                 text = 'not enough'
 
