@@ -39,6 +39,9 @@ def add_data(what_you_build, building_data, obj):
 
     if what_you_build == 'road':
         building_data[obj.y // len_height][obj.x // len_width] = obj
+
+    if what_you_build == 'monster':
+        building_data[obj.y // len_height][obj.x // len_width] = obj
     return building_data
 
 
@@ -430,33 +433,18 @@ def park_check(building_data, obj, buildings, parks):
                 
 def place_for_monstr(building, building_data):
     '''Функция находит свободное место рядом с замком, чтобы впихнуть монстра и возвращает координаты пустой клетки'''
-    for i in range (9):
-        mas=[0,0]
-        i=random.randint(building.x//len_width-1, building.x//len_width+1)
-        j = random.randint(building.y // len_height - 1,  building.y // len_height + 1)
-        if building_data[j][i]==None:
-            mas=[i*len_width, j*len_height]
-        return mas
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    x=building.x // len_width
+    y=building.y // len_height
+    mass=[0, 0]
+    mas=[[x-1, y], [x-1, y-1], [x, y-1], [x+1, y-1], [x+2, y-1], [x+2, y], [x+2, y+1], [x+1, y+1], [x, y+1], [x-1, y+1]]
+    for t in range (9):
+        r = random.randint(0, 9)
+        if mas[r][1] >= 0 and mas[r][1] <= 9 and mas[r][0] >= 0 and mas[r][0] <= 15:
+            if building_data[mas[r][1]][mas[r][0]] == None:
+                mass = [mas[r][0] * len_width, mas[r][1] * len_height]
+                break
+        print(mas[r], "||||", x, y)
+    return mass
 
 
 

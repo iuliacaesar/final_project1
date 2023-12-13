@@ -159,18 +159,21 @@ while not finished:
             draw_park(screen, p)
         for b in buildings:
             ''' Цикл проверяет есть ли уже монстры и ресурсы у замка, если их нет но пришло их время, то создает и рисует их вместе с замком'''
-            draw_building(screen, b[0])
-            if b[0].time%400==0 and b[1]==None:
+            if b[0].time%700==0 and b[1]==None:
                 b[1]=button_huyna = Button(b[0].x + 75, b[0].y - 75, width=40, height=40,
                                           color_text=(0, 0, 0), text='ХУЙ', size_text=20)
             if b[0].time%b[0].monstr_time==0 and b[2]==None:
-                b[0].m=0
-                b[2]=button_monstr = Button(place_for_monstr(b[0], building_data)[0],
-                                           place_for_monstr(b[0], building_data)[1], width=75, height=75,
+                mass=place_for_monstr(b[0], building_data)
+                if mass!=[0,0]:
+                    b[0].m = 0
+                    b[2]=button_monstr = Button(mass[0],
+                                           mass[1], width=75, height=75,
                                            color_text=(0, 0, 0), text='MONSTR', size_text=20)
-                building_data=add_data("house", building_data, b[2])
+                    building_data=add_data("monster", building_data, b[2])
+                    print(building_data)
             if b[2]!=None:
                 b[2].draw(window=screen)
+            draw_building(screen, b[0])
             if b[1]!=None:
                 b[1].draw(window=screen)
             b[0].time+=1
@@ -208,6 +211,7 @@ while not finished:
                     if b[2].pressed and event.type == pygame.MOUSEBUTTONDOWN:
                         varioty = random.randint(0, 1)
                         if varioty == 1:
+                            building_data[b[2].y//len_height][b[2].x//len_width]=None
                             b[2] = None
                             b[0].m = 1
                         else:
