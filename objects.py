@@ -88,23 +88,14 @@ class Roads():
         self.y = y
 
 
-class Resource_roads():
-    def __init__(self, x1, y1, x2, y2, type, screen):
-        self.screen = screen
-        self.type = type
+class Resource_roads(Roads):
+    def __init__(self,  x, y, type, screen, x1, y1, x2, y2):
+        Roads.__init__(self, x, y, type, screen)
         self.beginning_x = x1
         self.beginning_y = y1
         self.ending_x = x2
         self.ending_y = y2
 
-class Tracts():
-    def __init__(self,screen):
-        self.screen = screen
-        self.tract=[]
-
-        '''
-        x,y - координаты ВЕРХНЕГО ЛЕВОГО угла квадрата, где располагается 
-        '''
 
 
 class Parks():
@@ -117,11 +108,3 @@ class Parks():
         self.time = 0
 
 
-class Problems():
-    def __init__(self, x, y, type, level, screen):
-        self.screen = screen
-        self.type = type
-        self.level = level
-        self.x = x
-        self.y = y
-        self.time = 0

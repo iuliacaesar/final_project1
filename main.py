@@ -388,7 +388,7 @@ while not finished:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'water_road' and coordinates_type == 2:
                 mouse_x2, mouse_y2 = pygame.mouse.get_pos()
                 mouse_x2, mouse_y2 = get_xy(mouse_x2, mouse_y2)
-                new_water_road = Resource_roads(mouse_x1, mouse_y1, mouse_x2, mouse_y2, 1, screen)
+                new_water_road = Resource_roads(0, 0, 1, screen, mouse_x1, mouse_y1, mouse_x2, mouse_y2)
                 resource_roads.append(new_water_road)
                 score -= WATER_ROAD_COST
                 water_road_check(building_data, new_water_road, buildings, resources)
