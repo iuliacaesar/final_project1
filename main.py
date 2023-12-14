@@ -535,6 +535,8 @@ while not finished:
                 parks = []
                 resource_roads = []
                 monstrs = []
+                for i in range(10):
+                    building_data.append([None] * 16)
                 water = 0
                 electricity = 0
                 score = 300
