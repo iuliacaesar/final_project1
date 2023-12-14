@@ -61,7 +61,7 @@ resource_roads = []
 monstrs=[]
 water = 0
 electricity = 0
-score = 300
+score = 3000
 
 finished = False
 page = 'start'
