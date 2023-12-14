@@ -289,11 +289,11 @@ def draw_fon(screen, x, y):
 def draw_building(screen, b):
     x = b.x
     y = b.y
-    if b.type == 1:
+    if b.get_type() == 1:
         image = castle1
-    elif b.type == 2:
+    elif b.get_type() == 2:
         image = castle2
-    elif b.type == 3:
+    elif b.get_type() == 3:
         image = castle3
     size_of_image = 150
     position_y = -60
@@ -352,9 +352,9 @@ def draw_road(screen, b):
 def draw_resources(screen, b):
     x = b.x
     y = b.y
-    if b.type == 1:
+    if b.get_type() == 1:
         image = lake
-    elif b.type == 2:
+    elif b.get_type()== 2:
         image = mile1
     size_of_image = 75
     position_y = -0
@@ -365,7 +365,7 @@ def draw_resources(screen, b):
 
     size_of_image = 75
     position_y = -0
-    if b.type == 2:
+    if b.get_type() == 2:
         image = mile2
         scaled_image = pygame.transform.scale(image, (size_of_image, size_of_image))
         image = pygame.transform.rotate(scaled_image, b.angle)

@@ -52,7 +52,7 @@ class Buildings():
 
     def __init__(self, x, y, type, level, screen):
         self.screen = screen
-        self.type = type
+        self.__type = type
         self.level = level
         self.x = x
         self.y = y
@@ -62,7 +62,10 @@ class Buildings():
         self.m = 1
         self.time=1
         self.monstr_time=random.randint(500,2000)
-
+    def get_type(self):
+        return self.__type
+    def set_type(self, type):
+        self.__type = type
     '''
     type - тип здания
     level - уровень 
@@ -73,12 +76,16 @@ class Buildings():
 class Resources():
     def __init__(self, x, y, type, screen):
         self.screen = screen
-        self.type = type
+        self.__type = type
         self.x = x
         self.y = y
         self.time = 0
         self.angle = 0
         self.castles = 0
+    def get_type(self):
+        return self.__type
+    def set_type(self, type):
+        self.__type = type
 
 class Roads():
     def __init__(self, x, y, type, screen):

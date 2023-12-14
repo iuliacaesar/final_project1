@@ -61,7 +61,7 @@ resource_roads = []
 monstrs=[]
 water = 0
 electricity = 0
-score = 3000
+score = 300
 
 finished = False
 page = 'start'
@@ -119,9 +119,11 @@ while not finished:
 
                 # Подгрузка данных в массив building_data из данных о предыдущей игре
                 for b in buildings:
-                    building_data = add_data('house', building_data, b)
+                    building_data = add_data('house', building_data, b[0])
+                    
                 for r in resources:
                     building_data = add_data('water', building_data, r)
+                 
                 # print(building_data)
 
             if button_start_new.pressed and event.type == pygame.MOUSEBUTTONDOWN:
@@ -393,6 +395,7 @@ while not finished:
                 score -= WATER_ROAD_COST
                 water_road_check(building_data, new_water_road, buildings, resources)
                 check_resource_road_type(building_data, new_water_road, resources)
+                coordinates_type = 1
                 page = 'main'
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and what_you_build == 'water_road' and coordinates_type == 1:
                 mouse_x1, mouse_y1 = pygame.mouse.get_pos()
@@ -494,7 +497,7 @@ while not finished:
                 what_you_build = 'water_road'
                 coordinates_type = 1
                 page = 'process of build'
-
+    
             # если недостаточно счёта для строительства
             if ((button_build_castle1.pressed) or (button_build_castle2.pressed) or (
             button_build_castle3.pressed) and event.type == pygame.MOUSEBUTTONDOWN and score < HOUSE_COST) or (

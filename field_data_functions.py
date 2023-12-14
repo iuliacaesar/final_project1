@@ -340,9 +340,9 @@ def check_resource_road_type(building_data, obj, resources):
     if (building_data[obj.beginning_y // len_height][obj.beginning_x // len_width] in resources) and (building_data[obj.ending_y // len_height][obj.ending_x // len_width] in resources):
         obj.type = 3
     elif building_data[obj.beginning_y // len_height][obj.beginning_x // len_width] in resources:
-        obj.type = building_data[obj.beginning_y // len_height][obj.beginning_x // len_width].type
+        obj.type = building_data[obj.beginning_y // len_height][obj.beginning_x // len_width].get_type()
     elif building_data[obj.ending_y // len_height][obj.ending_x // len_width] in resources:
-        obj.type = building_data[obj.ending_y // len_height][obj.ending_x // len_width].type
+        obj.type = building_data[obj.ending_y // len_height][obj.ending_x // len_width].get_type
     else:
         obj.type = 3
 def water_road_check(building_data, obj, buildings, resources):
@@ -360,9 +360,9 @@ def water_road_check(building_data, obj, buildings, resources):
     if obj_beginning in castles:
         if obj_ending in resources and obj_ending.castles < 3:
             obj_ending.castles += 1
-            if obj_ending.type == 1:
+            if obj_ending.get_type() == 1:
                 obj_beginning.water = 1
-            if obj_ending.type == 2:
+            if obj_ending.get_type() == 2:
                 obj_beginning.electricity = 1
             obj_beginning.level = min(3, max(1, obj_beginning.park + obj_beginning.electricity + obj_beginning.water))
 
@@ -370,24 +370,24 @@ def water_road_check(building_data, obj, buildings, resources):
 
         if obj_ending in resources and obj_ending.castles < 3:
             x = building_data[obj.beginning_y // len_height][obj.beginning_x // len_width - 1]
-            if obj_ending.type == 1:
+            if obj_ending.get_type() == 1:
                 x.water = 1
-            if obj_ending.type == 2:
+            if obj_ending.get_type() == 2:
                 x.electricity = 1
             x.level = min(3, max(1, x.water + x.electricity + x.park ))
     elif obj_beginning in resources and obj_beginning.castles < 3:
         obj_beginning.castles += 1
         if obj_ending in castles:
-            if obj_beginning.type == 1:
+            if obj_beginning.get_type() == 1:
                 obj_ending.water =1
-            if obj_beginning.type == 2:
+            if obj_beginning.get_type() == 2:
                 obj_ending.electricity =1
             obj_ending.level = min(3, max(1, obj_ending.park + obj_ending.electricity + obj_ending.water) )
         elif obj_ending == 1:
             x = building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1]
-            if obj_beginning.type == 1:
+            if obj_beginning.get_type() == 1:
                 x.water = 1
-            if obj_beginning.type == 2:
+            if obj_beginning.get_type() == 2:
                 x.electricity = 1
 
 
@@ -407,11 +407,11 @@ def park_check(building_data, obj, buildings, parks):
         for i in range(3):
             for j in range(4):
                 
-                if y -1 + i <= 9 and x - 1 + j <= 15:
+                if 0 < y -1 + i < HEIGHT // len_height  and 0 < x - 1 + j < WIDTH // len_width:
                     if building_data[y-1+i][x-1+j] in parks:
                         obj.park = 1
                         obj.level = min(3, max( obj.water + obj.electricity+ obj.park, 1))
-                        print(obj.level)
+                    
                    
         
     
@@ -420,7 +420,7 @@ def park_check(building_data, obj, buildings, parks):
         for i in range(3):
             for j in range(4):
                 #print(building_data[y-1+i][x-1+j] in castles)
-                if y-2+i <= 9 and x-2+j <= 15:
+                if 0 < y-2+i < HEIGHT // len_height - 1 and 0 < x-2+j < WIDTH // len_width:
                     if building_data[y-1+i][x-2+j] in castles:
                         building_data[y-1+i][x-2+j].park = 1
                     
