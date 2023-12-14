@@ -333,11 +333,13 @@ def which_road(x, y, building_data):
 
     return type_
 
+
 def check_resource_road_type(building_data, obj, resources):
     '''
     определяет тип провода в зависимости от того, какие обьекты он соединяет
     '''
-    if (building_data[obj.beginning_y // len_height][obj.beginning_x // len_width] in resources) and (building_data[obj.ending_y // len_height][obj.ending_x // len_width] in resources):
+    if (building_data[obj.beginning_y // len_height][obj.beginning_x // len_width] in resources) and (
+            building_data[obj.ending_y // len_height][obj.ending_x // len_width] in resources):
         obj.type = 3
     elif building_data[obj.beginning_y // len_height][obj.beginning_x // len_width] in resources:
         obj.type = building_data[obj.beginning_y // len_height][obj.beginning_x // len_width].get_type()
@@ -345,6 +347,8 @@ def check_resource_road_type(building_data, obj, resources):
         obj.type = building_data[obj.ending_y // len_height][obj.ending_x // len_width].get_type
     else:
         obj.type = 3
+
+
 def water_road_check(building_data, obj, buildings, resources):
     '''
     функция проверяет, соединил ли водный провод замок и озеро (проверяет для дороги)
@@ -374,22 +378,21 @@ def water_road_check(building_data, obj, buildings, resources):
                 x.water = 1
             if obj_ending.get_type() == 2:
                 x.electricity = 1
-            x.level = min(3, max(1, x.water + x.electricity + x.park ))
+            x.level = min(3, max(1, x.water + x.electricity + x.park))
     elif obj_beginning in resources and obj_beginning.castles < 3:
         obj_beginning.castles += 1
         if obj_ending in castles:
             if obj_beginning.get_type() == 1:
-                obj_ending.water =1
+                obj_ending.water = 1
             if obj_beginning.get_type() == 2:
-                obj_ending.electricity =1
-            obj_ending.level = min(3, max(1, obj_ending.park + obj_ending.electricity + obj_ending.water) )
+                obj_ending.electricity = 1
+            obj_ending.level = min(3, max(1, obj_ending.park + obj_ending.electricity + obj_ending.water))
         elif obj_ending == 1:
             x = building_data[obj.ending_y // len_height][obj.ending_x // len_width - 1]
             if obj_beginning.get_type() == 1:
                 x.water = 1
             if obj_beginning.get_type() == 2:
                 x.electricity = 1
-
 
 
 def park_check(building_data, obj, buildings, parks):
@@ -401,43 +404,40 @@ def park_check(building_data, obj, buildings, parks):
     castles = []
     for b in buildings:
         castles.append(b[0])
-    
 
     if obj in castles:
         for i in range(3):
             for j in range(4):
-                
-                if 0 < y -1 + i < HEIGHT // len_height  and 0 < x - 1 + j < WIDTH // len_width:
-                    if building_data[y-1+i][x-1+j] in parks:
+
+                if 0 < y - 1 + i < HEIGHT // len_height and 0 < x - 1 + j < WIDTH // len_width:
+                    if building_data[y - 1 + i][x - 1 + j] in parks:
                         obj.park = 1
-                        obj.level = min(3, max( obj.water + obj.electricity+ obj.park, 1))
-                    
-                   
-        
-    
+                        obj.level = min(3, max(obj.water + obj.electricity + obj.park, 1))
+
     if obj in parks:
-        
+
         for i in range(3):
             for j in range(4):
-                #print(building_data[y-1+i][x-1+j] in castles)
-                if 0 < y-2+i < HEIGHT // len_height - 1 and 0 < x-2+j < WIDTH // len_width:
-                    if building_data[y-1+i][x-2+j] in castles:
-                        building_data[y-1+i][x-2+j].park = 1
-                    
-                        x1 = x-2+j
-                        y1 = y-1+i
-                    
-                        building_data[y1][x1].level = min(3, max(1, building_data[y1][x1].water +building_data[y1][x1].electricity+ building_data[y1][x1].park))
-        
-    
-                
+                # print(building_data[y-1+i][x-1+j] in castles)
+                if 0 < y - 2 + i < HEIGHT // len_height - 1 and 0 < x - 2 + j < WIDTH // len_width:
+                    if building_data[y - 1 + i][x - 2 + j] in castles:
+                        building_data[y - 1 + i][x - 2 + j].park = 1
+
+                        x1 = x - 2 + j
+                        y1 = y - 1 + i
+
+                        building_data[y1][x1].level = min(3, max(1, building_data[y1][x1].water + building_data[y1][
+                            x1].electricity + building_data[y1][x1].park))
+
+
 def place_for_monstr(building, building_data):
     '''Функция находит свободное место рядом с замком, чтобы впихнуть монстра и возвращает координаты пустой клетки'''
-    x=building.x // len_width
-    y=building.y // len_height
-    mass=[0, 0]
-    mas=[[x-1, y], [x-1, y-1], [x, y-1], [x+1, y-1], [x+2, y-1], [x+2, y], [x+2, y+1], [x+1, y+1], [x, y+1], [x-1, y+1]]
-    for t in range (9):
+    x = building.x // len_width
+    y = building.y // len_height
+    mass = [0, 0]
+    mas = [[x - 1, y], [x - 1, y - 1], [x, y - 1], [x + 1, y - 1], [x + 2, y - 1], [x + 2, y], [x + 2, y + 1],
+           [x + 1, y + 1], [x, y + 1], [x - 1, y + 1]]
+    for t in range(9):
         r = random.randint(0, 9)
         if mas[r][1] >= 0 and mas[r][1] <= 9 and mas[r][0] >= 0 and mas[r][0] <= 15:
             if building_data[mas[r][1]][mas[r][0]] == None:
@@ -445,7 +445,6 @@ def place_for_monstr(building, building_data):
                 break
         print(mas[r], "||||", x, y)
     return mass
-
 
 
 

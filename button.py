@@ -28,7 +28,7 @@ class Button:
         '''
         функция рисует кнопку, красная - если кнопка нажата, свой цвет - если не нажата
         '''
-        if self.text=="START" or self.text=="CONTINUE" or self.text=="close":
+        if self.text=="START" or self.text=="CONTINUE" or self.text=="close" or self.text=="START NEW":
             pygame.draw.rect(window, (90, 0, 150, 100), (self.x, self.y, self.width, self.height), 10, 12 )
             pygame.draw.rect(window, (150, 140, 255, 100), (self.x+5, self.y+5, self.width-10, self.height-10), 20, 12 )
             font = pygame.font.Font(None, self.size_text)

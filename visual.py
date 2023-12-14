@@ -19,7 +19,8 @@ def load_fon():
         button_lake, button_mile, button_road, button_park, button_water, but_h1, but_h2, but_h3, but_h4, but_h5, but_h6, but_h7,\
         but_h8, but_h9, but_h10, but_m1, but_m2, but_m3, but_m4, but_m5, but_m6, but_m7, but_m8, but_m9, but_m10, but_m11, \
         but_m12, but_m13, but_m14,  but_m15, but_m16, but_m17, but_m18, but_m19, but_m20, but_m21, park, moster_smile, \
-        button_destroy
+        button_destroy, turtle, final1, final2, final3, final4, final5, final6, final7, final8, final9, final10, final11, \
+        final12, final13, final14, final15, final16, final17, final18, final19, final20, FINAL
 
     FON = pygame.image.load('.\images\image.psd.png').convert_alpha()
     FON1 = pygame.image.load('.\images\image1.psd.png').convert_alpha()
@@ -97,6 +98,30 @@ def load_fon():
     but_m21= pygame.image.load(".\images\\21.png").convert_alpha()
 
     park = pygame.image.load(".\images\\парк.png").convert_alpha()
+    turtle = pygame.image.load(".\images\\черепах.png").convert_alpha()
+
+    final1 = pygame.image.load(".\images\\1=.png").convert_alpha()
+    final2 = pygame.image.load(".\images\\2=.png").convert_alpha()
+    final3 = pygame.image.load(".\images\\3=.png").convert_alpha()
+    final4 = pygame.image.load(".\images\\4=.png").convert_alpha()
+    final5 = pygame.image.load(".\images\\5=.png").convert_alpha()
+    final6 = pygame.image.load(".\images\\6=.png").convert_alpha()
+    final7 = pygame.image.load(".\images\\7=.png").convert_alpha()
+    final8 = pygame.image.load(".\images\\8=.png").convert_alpha()
+    final9 = pygame.image.load(".\images\\9=.png").convert_alpha()
+    final10 = pygame.image.load(".\images\\10=.png").convert_alpha()
+    final11 = pygame.image.load(".\images\\11=.png").convert_alpha()
+    final12 = pygame.image.load(".\images\\12=.png").convert_alpha()
+    final13 = pygame.image.load(".\images\\13=.png").convert_alpha()
+    final14 = pygame.image.load(".\images\\14=.png").convert_alpha()
+    final15 = pygame.image.load(".\images\\15=.png").convert_alpha()
+    final16 = pygame.image.load(".\images\\16=.png").convert_alpha()
+    final17 = pygame.image.load(".\images\\17=.png").convert_alpha()
+    final18 = pygame.image.load(".\images\\18=.png").convert_alpha()
+    final19 = pygame.image.load(".\images\\19=.png").convert_alpha()
+    final20 = pygame.image.load(".\images\\20=.png").convert_alpha()
+    FINAL=[final1, final2, final3, final4, final5, final6, final7, final8, final9, final10, final11,
+        final12, final13, final14, final15, final16, final17, final18, final19, final20]
 
 def draw_monstr(but, window):
     if int(but.time) == 1:
@@ -420,6 +445,16 @@ def draw_water_road(screen, b):
         screen, (0, 155, 245),
         (int(b.ending_x+ len_width/2), int(b.ending_y+ len_height/2)),
         int(r))
+
+def draw_final_turtles(x, screen):
+    text_money = "WIN"
+    font = pygame.font.SysFont("cascadiamonoregular", 300)
+    text = font.render(text_money, True, (90, 0, 150, 100))
+    text_rect = text.get_rect(center=(600, 200))
+    screen.blit(text, text_rect)
+    image = FINAL[(x//7)%20]
+    screen.blit(image, (350, 350))
+
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
