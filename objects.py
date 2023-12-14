@@ -27,6 +27,9 @@ def check_score(score, what_you_build):
         return True
     if what_you_build == 'water_road' and score >= WATER_ROAD_COST:
         return True
+        return True
+    if what_you_build == 'destroy':
+        return True 
     return False
 
 def get_score(what_you_build):
@@ -42,6 +45,8 @@ def get_score(what_you_build):
         return PARK_COST
     if what_you_build == 'water_road':
         return WATER_ROAD_COST
+    if what_you_build == 'destroy':
+        return 0
 
 
 class Buildings():
@@ -102,6 +107,10 @@ class Resource_roads(Roads):
         self.beginning_y = y1
         self.ending_x = x2
         self.ending_y = y2
+        if type == 1:
+            self.color = (0, 155, 245)
+        else:
+            self.color = (212, 152, 0)
 
 
 

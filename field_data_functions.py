@@ -42,6 +42,10 @@ def add_data(what_you_build, building_data, obj):
 
     if what_you_build == 'monster':
         building_data[obj.y // len_height][obj.x // len_width] = obj
+
+    if what_you_build == 'destroy':
+        building_data[obj.y // len_height][obj.x // len_width] = obj
+
     return building_data
 
 
@@ -92,6 +96,16 @@ def check_the_place(what_you_build, building_data, x, y):
                 x // len_width] != 1:
                 if type(building_data[y // len_height][x // len_width]).__name__ == "Roads":
                     flag = False
+
+    elif what_you_build == 'destroy':
+        if y // len_height + ROAD_HIGHT // len_height > HEIGHT // len_height or x // len_width + ROAD_LEN // len_width > WIDTH // len_width:
+            flag = False
+        else:
+            if building_data[y // len_height][x // len_width] != None and building_data[y // len_height][
+                x // len_width] != 1:
+                if type(building_data[y // len_height][x // len_width]).__name__ == "Roads":
+                    flag = False
+
     return flag
 
 

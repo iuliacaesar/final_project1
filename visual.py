@@ -98,7 +98,7 @@ def load_fon():
     but_m21= pygame.image.load(".\images\\21.png").convert_alpha()
 
     park = pygame.image.load(".\images\\парк.png").convert_alpha()
-    turtle = pygame.image.load(".\images\\черепах.png").convert_alpha()
+    # turtle = pygame.image.load(".\images\\черепах.png").convert_alpha()
 
     final1 = pygame.image.load(".\images\\1=.png").convert_alpha()
     final2 = pygame.image.load(".\images\\2=.png").convert_alpha()
@@ -436,14 +436,32 @@ def blit_text(surface, text, pos, font, color='black'):
 def draw_water_road(screen, b):
     wgh = 2.5
     r = 5
-    pygame.draw.line(screen, (0, 155, 245), [int(b.beginning_x + len_width/2), int(b.beginning_y + len_height/2)], [int(b.ending_x+ len_width/2), int(b.ending_y+ len_height/2)], int(wgh))
+    color = b.color
+    pygame.draw.line(screen, color, [int(b.beginning_x + len_width/2), int(b.beginning_y + len_height/2)], [int(b.ending_x+ len_width/2), int(b.ending_y+ len_height/2)], int(wgh))
     pygame.draw.circle(
-        screen, (0, 155, 245),
+        screen, color,
         (int(b.beginning_x + len_width/2), int(b.beginning_y + len_height/2)),
         int(r))
     pygame.draw.circle(
-        screen, (0, 155, 245),
+        screen, color,
         (int(b.ending_x+ len_width/2), int(b.ending_y+ len_height/2)),
+        int(r))
+
+def draw_water_road_process(screen, x_, y_, x, y, type_ =1):
+    wgh = 2.5
+    r = 5
+    if type_ == 1:
+        color = (0, 155, 245)
+    else:
+        color = (212, 152, 0)
+    pygame.draw.line(screen, color, [int(x_ + len_width/2), int(y_+ len_height/2)], [int(x), int(y)], int(wgh))
+    pygame.draw.circle(
+        screen, color,
+        [int(x_ + len_width/2), int(y_+ len_height/2)],
+        int(r))
+    pygame.draw.circle(
+        screen, color,
+        [int(x), int(y)],
         int(r))
 
 def draw_final_turtles(x, screen):
