@@ -622,3 +622,5 @@ while not finished:
     time += 1
 
 pygame.quit()
+
+"Мяу"
