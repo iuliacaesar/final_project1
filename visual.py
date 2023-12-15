@@ -16,9 +16,9 @@ pygame.init()
 def load_fon():
     global FON, FON1, road0, road1, road2, road3, road4, road5, road6, road7, road8, road9, road10, castle1, castle2, castle3, \
         mile1, mile2, lake, star1, star2, star3, clouds, fonstarta, button_castle1, button_castle2, button_castle3, \
-        button_lake, button_mile, button_road, button_park, button_water, but_h1, but_h2, but_h3, but_h4, but_h5, but_h6, but_h7,\
+        button_lake, button_mile, button_road, button_park, button_water, but_h1, but_h2, but_h3, but_h4, but_h5, but_h6, but_h7, \
         but_h8, but_h9, but_h10, but_m1, but_m2, but_m3, but_m4, but_m5, but_m6, but_m7, but_m8, but_m9, but_m10, but_m11, \
-        but_m12, but_m13, but_m14,  but_m15, but_m16, but_m17, but_m18, but_m19, but_m20, but_m21, park, moster_smile, \
+        but_m12, but_m13, but_m14, but_m15, but_m16, but_m17, but_m18, but_m19, but_m20, but_m21, park, moster_smile, \
         button_destroy, turtle, final1, final2, final3, final4, final5, final6, final7, final8, final9, final10, final11, \
         final12, final13, final14, final15, final16, final17, final18, final19, final20, FINAL
 
@@ -64,7 +64,7 @@ def load_fon():
     button_water = pygame.image.load(".\images\\button_water.png").convert_alpha()
     button_destroy = pygame.image.load(".\images\\destroy.png").convert_alpha()
 
-    but_h1=pygame.image.load(".\images\\11zon_1.png").convert_alpha()
+    but_h1 = pygame.image.load(".\images\\11zon_1.png").convert_alpha()
     but_h2 = pygame.image.load(".\images\\11zon_2.png").convert_alpha()
     but_h3 = pygame.image.load(".\images\\11zon_3.png").convert_alpha()
     but_h4 = pygame.image.load(".\images\\11zon_4.png").convert_alpha()
@@ -85,17 +85,17 @@ def load_fon():
     but_m8 = pygame.image.load(".\images\\8.png").convert_alpha()
     but_m9 = pygame.image.load(".\images\\9.png").convert_alpha()
     but_m10 = pygame.image.load(".\images\\10.png").convert_alpha()
-    but_m11= pygame.image.load(".\images\\11.png").convert_alpha()
-    but_m12= pygame.image.load(".\images\\12.png").convert_alpha()
-    but_m13= pygame.image.load(".\images\\13.png").convert_alpha()
-    but_m14= pygame.image.load(".\images\\14.png").convert_alpha()
-    but_m15= pygame.image.load(".\images\\15.png").convert_alpha()
-    but_m16= pygame.image.load(".\images\\16.png").convert_alpha()
-    but_m17= pygame.image.load(".\images\\17.png").convert_alpha()
-    but_m18= pygame.image.load(".\images\\18.png").convert_alpha()
-    but_m19= pygame.image.load(".\images\\19.png").convert_alpha()
-    but_m20= pygame.image.load(".\images\\20.png").convert_alpha()
-    but_m21= pygame.image.load(".\images\\21.png").convert_alpha()
+    but_m11 = pygame.image.load(".\images\\11.png").convert_alpha()
+    but_m12 = pygame.image.load(".\images\\12.png").convert_alpha()
+    but_m13 = pygame.image.load(".\images\\13.png").convert_alpha()
+    but_m14 = pygame.image.load(".\images\\14.png").convert_alpha()
+    but_m15 = pygame.image.load(".\images\\15.png").convert_alpha()
+    but_m16 = pygame.image.load(".\images\\16.png").convert_alpha()
+    but_m17 = pygame.image.load(".\images\\17.png").convert_alpha()
+    but_m18 = pygame.image.load(".\images\\18.png").convert_alpha()
+    but_m19 = pygame.image.load(".\images\\19.png").convert_alpha()
+    but_m20 = pygame.image.load(".\images\\20.png").convert_alpha()
+    but_m21 = pygame.image.load(".\images\\21.png").convert_alpha()
 
     park = pygame.image.load(".\images\\парк.png").convert_alpha()
     # turtle = pygame.image.load(".\images\\черепах.png").convert_alpha()
@@ -120,8 +120,9 @@ def load_fon():
     final18 = pygame.image.load(".\images\\18=.png").convert_alpha()
     final19 = pygame.image.load(".\images\\19=.png").convert_alpha()
     final20 = pygame.image.load(".\images\\20=.png").convert_alpha()
-    FINAL=[final1, final2, final3, final4, final5, final6, final7, final8, final9, final10, final11,
-        final12, final13, final14, final15, final16, final17, final18, final19, final20]
+    FINAL = [final1, final2, final3, final4, final5, final6, final7, final8, final9, final10, final11,
+             final12, final13, final14, final15, final16, final17, final18, final19, final20]
+
 
 def draw_monstr(but, window):
     if int(but.time) == 1:
@@ -140,40 +141,41 @@ def draw_monstr(but, window):
         image = but_m7
     elif int(but.time) == 8:
         image = but_m8
-    elif int(but.time) ==9:
+    elif int(but.time) == 9:
         image = but_m9
-    elif int(but.time) ==10:
+    elif int(but.time) == 10:
         image = but_m10
-    elif int(but.time) ==11:
+    elif int(but.time) == 11:
         image = but_m11
-    elif int(but.time) ==12:
+    elif int(but.time) == 12:
         image = but_m12
     elif int(but.time) == 13:
         image = but_m13
-    elif int(but.time) ==14:
+    elif int(but.time) == 14:
         image = but_m14
-    elif int(but.time) ==15:
+    elif int(but.time) == 15:
         image = but_m15
-    elif int(but.time) ==16:
+    elif int(but.time) == 16:
         image = but_m16
-    elif int(but.time) ==17:
+    elif int(but.time) == 17:
         image = but_m17
-    elif int(but.time) ==18:
+    elif int(but.time) == 18:
         image = but_m18
-    elif int(but.time) ==19:
+    elif int(but.time) == 19:
         image = but_m19
-    elif int(but.time) ==20:
+    elif int(but.time) == 20:
         image = but_m20
-    elif int(but.time) ==21:
+    elif int(but.time) == 21:
         image = but_m21
 
-
-        but.time=1
-    but.time+=0.25
+        but.time = 1
+    but.time += 0.25
     temp_surface = pygame.Surface([100, 100], pygame.SRCALPHA)
     temp_surface.blit(image, [0, 0])
     scaled_image = pygame.transform.scale(image, (but.width, but.height))
     window.blit(scaled_image, (but.x, but.y))
+
+
 def draw_block(but, window):
     if int(but.time) == 1:
         image = but_h1
@@ -195,40 +197,43 @@ def draw_block(but, window):
         image = but_h9
     elif int(but.time) == 10:
         image = but_h10
-        but.time=1
-    but.time+=0.33
+        but.time = 1
+    but.time += 0.33
     temp_surface = pygame.Surface([150, 150], pygame.SRCALPHA)
     temp_surface.blit(image, [0, 0])
-    scaled_image = pygame.transform.scale(image, (but.width/2, but.height/2))
+    scaled_image = pygame.transform.scale(image, (but.width / 2, but.height / 2))
     window.blit(scaled_image, (but.x, but.y))
 
+
 def draw_monets(but, window):
-    image=but_h1
+    image = but_h1
     temp_surface = pygame.Surface([150, 150], pygame.SRCALPHA)
     temp_surface.blit(image, [0, 0])
     scaled_image = pygame.transform.scale(image, (50, 50))
-    window.blit(scaled_image, (but.x+but.width-35, but.y-15))
-    text_money=""
-    if but.text=="castle 1" or but.text=="castle 2" or but.text=="castle 3":
-        text_money=str(100)
-    elif but.text=="lake":
+    window.blit(scaled_image, (but.x + but.width - 35, but.y - 15))
+    text_money = ""
+    if but.text == "castle 1" or but.text == "castle 2" or but.text == "castle 3":
+        text_money = str(100)
+    elif but.text == "lake":
         text_money = str(50)
-    elif but.text=="mile":
+    elif but.text == "mile":
         text_money = str(50)
-    elif but.text=="road":
+    elif but.text == "road":
         text_money = str(0)
-    elif but.text=="park":
+    elif but.text == "park":
         text_money = str(70)
-    elif but.text=="connect_objects":
+    elif but.text == "connect_objects":
         text_money = str(10)
     elif but.text == "demolition":
         text_money = "+40"
-    font = pygame.font.SysFont( "cascadiamonoregular", but.size_text-15, italic=True)
-    text = font.render( text_money, True, (49, 19, 9))
-    text_rect = text.get_rect(center=(but.x + but.width-10, but.y +10))
+    font = pygame.font.SysFont("cascadiamonoregular", but.size_text - 15, italic=True)
+    text = font.render(text_money, True, (49, 19, 9))
+    text_rect = text.get_rect(center=(but.x + but.width - 10, but.y + 10))
     window.blit(text, text_rect)
+
+
 def draw_button(but, window):
-    #Лера, пожалуйста добавь кнопки для underground
+    # Лера, пожалуйста добавь кнопки для underground
     if but.text == "castle 1":
         image = button_castle1
     elif but.text == "castle 2":
@@ -253,10 +258,13 @@ def draw_button(but, window):
     scaled_image = pygame.transform.scale(image, (but.width - 10, but.height - 10))
     window.blit(scaled_image, (but.x + 5, but.y + 5))
 
+
 def draw_fon1(screen):
     image = FON1
     scaled_image = pygame.transform.scale(image, (WIDTH, HEIGHT))
     screen.blit(scaled_image, (0, 0))
+
+
 def draw_fon_start(screen, time):
     global time_
     time_ = time
@@ -270,23 +278,24 @@ def draw_rules(screen):
     global time_
     if time_ <= 100:
         beginningtext = '                       Правила игры:'
+    elif time_ >100 and time_<=1000:
+        beginningtext = '\n \n \n Только рыцарь, победивший полчища \n монстров и построивший 7 замков,\n  сможет дойти до  таинственного \n "Шаббат Шаллома"... \n \n' \
+                        'Некоторые подсказки отважному \n игроку: \n \n' \
+                        'Чтобы открыть меню щелкните правой \n кнопкой мыши. \n \n' \
+                        'Чтобы посмотреть на подземные \n коммуникации нажмите "undergraund". \n \n'
     else:
-        beginningtext = ' Только рыцарь, победивший полчища \n монстров и построивший 7 замков,\n  сможет дойти до  таинственного \n "Шаббат Шаллома"... \n \n' \
-            'Некоторые подсказки отважному \n игроку: \n \n' \
-            'Чтобы открыть меню щелкните правой \n кнопкой мыши. \n \n' \
-            'Чтобы посмотреть на подземные \n коммуникации нажмите "undergraund". \n \n' \
-            'Парк построенный рядом с замком, \n мельница или озеро, соединенные с \n замком, приносят +1 уровень замку. \n Чем больше уровень, тем больше \n ресурсов он приносит. Когда рядом с \n замком появляется монстр, появляется \n красный значок, и доходность замка \n становится 0. \n \n' \
-            'Чтобы собрать ресурсы нажмите на \n них. Чтобы убить монстра нажмите на \n него. Но вы победите лишь с 50% \n вероятностью, в противном случае \n потеряете 50 очков, если ваш счет при \n этом не станет меньше 0. \n \n' \
-        # 'Правила игры: Только доблестный рыцарь,  победивший полчища монстров и построивший 7 замков, сможет проийти игру ... '
+        beginningtext = '\n \nПарк построенный рядом с замком, \n мельница или озеро, соединенные с \n замком, приносят +1 уровень замку. \n Чем больше уровень, тем больше \n ресурсов он приносит. Когда рядом с \n замком появляется монстр, появляется \n красный значок, и доходность замка \n становится 0. \n \n' \
+                        'Чтобы собрать ресурсы нажмите на \n них. Чтобы убить монстра нажмите на \n него. Но вы победите лишь с 50% \n вероятностью, в противном случае \n потеряете 50 очков, если ваш счет при \n этом не станет меньше 0. \n \n' \
+            # 'Правила игры: Только доблестный рыцарь,  победивший полчища монстров и построивший 7 замков, сможет проийти игру ... '
     # elif time_ > 400 and time_ < 800:
     #     beginningtext = "Пропишу"
     # else:
     #     beginningtext = "Возможно"
     #     time_ = 0
-    temp_surface = pygame.Surface([350, 500], pygame.SRCALPHA)
+    temp_surface = pygame.Surface([350, 350], pygame.SRCALPHA)
     font = pygame.font.SysFont('aria', 25)
     blit_text(screen, beginningtext, (100, 80), font)
- 
+
     pygame.draw.polygon(temp_surface, (100, 0, 150, 100), [[0, 0], [350, 0], [350, 500], [0, 500]])
     screen.blit(temp_surface, [100, 80])
 
@@ -343,8 +352,8 @@ def draw_building(screen, b):
 
     if b.level == 1:
         image1 = star1
-    elif b.level ==0:
-        image1=moster_smile
+    elif b.level == 0:
+        image1 = moster_smile
     elif b.level == 2:
         image1 = star2
     elif b.level == 3:
@@ -352,6 +361,7 @@ def draw_building(screen, b):
     temp_surface.blit(image1, [0, 0])
     scaled_image1 = pygame.transform.scale(image1, (150, 150))
     screen.blit(scaled_image1, (x, y + position_y / 2))
+
 
 def draw_road(screen, b):
     x = b.x
@@ -387,12 +397,13 @@ def draw_road(screen, b):
     scaled_image = pygame.transform.scale(image, (size_of_image, size_of_image))
     screen.blit(scaled_image, (x, y + position_y))
 
+
 def draw_resources(screen, b):
     x = b.x
     y = b.y
     if b.get_type() == 1:
         image = lake
-    elif b.get_type()== 2:
+    elif b.get_type() == 2:
         image = mile1
     size_of_image = 75
     position_y = -0
@@ -411,6 +422,7 @@ def draw_resources(screen, b):
         screen.blit(image, (
             x + (-image.get_width() + size_of_image) / 2, y + position_y + (-image.get_height() + size_of_image) / 2))
 
+
 def draw_park(screen, p):
     image = park
     size_of_image = 75
@@ -419,6 +431,8 @@ def draw_park(screen, p):
     temp_surface.blit(image, [0, 0])
     scaled_image = pygame.transform.scale(image, (size_of_image, size_of_image))
     screen.blit(scaled_image, (p.x, p.y + position_y))
+
+
 def process_building(screen, x, y, len_x, len_y, able):
     if able:
         color = (0, 255, 0, 100)
@@ -446,36 +460,41 @@ def blit_text(surface, text, pos, font, color='black'):
             x += word_width + space
         x = pos[0]
         y += word_height
+
+
 def draw_water_road(screen, b):
     wgh = 2.5
     r = 5
     color = b.color
-    pygame.draw.line(screen, color, [int(b.beginning_x + len_width/2), int(b.beginning_y + len_height/2)], [int(b.ending_x+ len_width/2), int(b.ending_y+ len_height/2)], int(wgh))
+    pygame.draw.line(screen, color, [int(b.beginning_x + len_width / 2), int(b.beginning_y + len_height / 2)],
+                     [int(b.ending_x + len_width / 2), int(b.ending_y + len_height / 2)], int(wgh))
     pygame.draw.circle(
         screen, color,
-        (int(b.beginning_x + len_width/2), int(b.beginning_y + len_height/2)),
+        (int(b.beginning_x + len_width / 2), int(b.beginning_y + len_height / 2)),
         int(r))
     pygame.draw.circle(
         screen, color,
-        (int(b.ending_x+ len_width/2), int(b.ending_y+ len_height/2)),
+        (int(b.ending_x + len_width / 2), int(b.ending_y + len_height / 2)),
         int(r))
 
-def draw_water_road_process(screen, x_, y_, x, y, type_ =1):
+
+def draw_water_road_process(screen, x_, y_, x, y, type_=1):
     wgh = 2.5
     r = 5
     if type_ == 1:
         color = (0, 155, 245)
     else:
         color = (212, 152, 0)
-    pygame.draw.line(screen, color, [int(x_ + len_width/2), int(y_+ len_height/2)], [int(x), int(y)], int(wgh))
+    pygame.draw.line(screen, color, [int(x_ + len_width / 2), int(y_ + len_height / 2)], [int(x), int(y)], int(wgh))
     pygame.draw.circle(
         screen, color,
-        [int(x_ + len_width/2), int(y_+ len_height/2)],
+        [int(x_ + len_width / 2), int(y_ + len_height / 2)],
         int(r))
     pygame.draw.circle(
         screen, color,
         [int(x), int(y)],
         int(r))
+
 
 def draw_final_turtles(x, screen):
     text_money = "WIN"
@@ -483,7 +502,7 @@ def draw_final_turtles(x, screen):
     text = font.render(text_money, True, (90, 0, 150, 100))
     text_rect = text.get_rect(center=(600, 200))
     screen.blit(text, text_rect)
-    image = FINAL[(x*10//58)%20]
+    image = FINAL[(x * 10 // 58) % 20]
     screen.blit(image, (350, 350))
 
 
