@@ -265,17 +265,20 @@ def draw_fon_start(screen, time):
 
 
 def draw_rules(screen, time):
-    temp_surface = pygame.Surface([300, 300], pygame.SRCALPHA)
-    pygame.draw.polygon(temp_surface, (100, 0, 150, 100), [[0, 0], [300, 0], [300, 300], [0, 300]])
-    screen.blit(temp_surface, [100, 100])
-    if time <= 100:
-        beginningtext = 'Правила игры: \nЛера, прописывай'
-    elif time > 100 and time < 200:
+
+    if time <= 50:
+        beginningtext = 'Правила игры:'
+    elif time > 50 and time <= 400:
+        beginningtext = 'Правила игры: Только доблестный рыцарь,  победивший полчища монстров и построивший 7 замков, сможет проийти игру ... '
+    elif time > 400 and time < 800:
         beginningtext = "Пропишу"
     else:
         beginningtext = "Возможно"
+    temp_surface = pygame.Surface([300, 300], pygame.SRCALPHA)
     font = pygame.font.SysFont(None, 30)
-    blit_text(screen, beginningtext, (150, 150), font)
+    blit_text(temp_surface, beginningtext, (0, 0), font)
+    pygame.draw.polygon(temp_surface, (100, 0, 150, 100), [[0, 0], [300, 0], [300, 300], [0, 300]])
+    screen.blit(temp_surface, [100, 100])
 
 
 def draw_fon_menu(screen):
