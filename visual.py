@@ -258,27 +258,37 @@ def draw_fon1(screen):
     scaled_image = pygame.transform.scale(image, (WIDTH, HEIGHT))
     screen.blit(scaled_image, (0, 0))
 def draw_fon_start(screen, time):
+    global time_
+    time_ = time
     image = fonstarta
     scaled_image = pygame.transform.scale(image, (WIDTH, HEIGHT))
     screen.blit(scaled_image, (0, 0))
-    draw_rules(screen, time)
+    draw_rules(screen)
 
 
-def draw_rules(screen, time):
-
-    if time <= 50:
-        beginningtext = 'Правила игры:'
-    elif time > 50 and time <= 400:
-        beginningtext = 'Правила игры: Только доблестный рыцарь,  победивший полчища монстров и построивший 7 замков, сможет проийти игру ... '
-    elif time > 400 and time < 800:
-        beginningtext = "Пропишу"
+def draw_rules(screen):
+    global time_
+    if time_ <= 100:
+        beginningtext = '                       Правила игры:'
     else:
-        beginningtext = "Возможно"
-    temp_surface = pygame.Surface([300, 300], pygame.SRCALPHA)
-    font = pygame.font.SysFont(None, 30)
-    blit_text(temp_surface, beginningtext, (0, 0), font)
-    pygame.draw.polygon(temp_surface, (100, 0, 150, 100), [[0, 0], [300, 0], [300, 300], [0, 300]])
-    screen.blit(temp_surface, [100, 100])
+        beginningtext = ' Только рыцарь, победивший полчища \n монстров и построивший 7 замков,\n  сможет дойти до  таинственного \n "Шаббат Шаллома"... \n \n' \
+            'Некоторые подсказки отважному \n игроку: \n \n' \
+            'Чтобы открыть меню щелкните правой \n кнопкой мыши. \n \n' \
+            'Чтобы посмотреть на подземные \n коммуникации нажмите "undergraund". \n \n' \
+            'Парк построенный рядом с замком, \n мельница или озеро, соединенные с \n замком, приносят +1 уровень замку. \n Чем больше уровень, тем больше \n ресурсов он приносит. Когда рядом с \n замком появляется монстр, появляется \n красный значок, и доходность замка \n становится 0. \n \n' \
+            'Чтобы собрать ресурсы нажмите на \n них. Чтобы убить монстра нажмите на \n него. Но вы победите лишь с 50% \n вероятностью, в противном случае \n потеряете 50 очков, если ваш счет при \n этом не станет меньше 0. \n \n' \
+        # 'Правила игры: Только доблестный рыцарь,  победивший полчища монстров и построивший 7 замков, сможет проийти игру ... '
+    # elif time_ > 400 and time_ < 800:
+    #     beginningtext = "Пропишу"
+    # else:
+    #     beginningtext = "Возможно"
+    #     time_ = 0
+    temp_surface = pygame.Surface([350, 500], pygame.SRCALPHA)
+    font = pygame.font.SysFont('aria', 25)
+    blit_text(screen, beginningtext, (100, 80), font)
+ 
+    pygame.draw.polygon(temp_surface, (100, 0, 150, 100), [[0, 0], [350, 0], [350, 500], [0, 500]])
+    screen.blit(temp_surface, [100, 80])
 
 
 def draw_fon_menu(screen):

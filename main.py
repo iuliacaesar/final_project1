@@ -93,8 +93,8 @@ x = 0
 # Юле: А тут после подгрузки данные из файла предыдущей игры нужно изменить и building_data
 # ниже, после нажатия кнопки continue
 # ЗДЕСЬ
-connection_in(buildings, resources, roads, parks, resource_roads, monstrs, screen, score)
-buildings, resources, roads, parks, resource_roads, monstrs, screen, score = connection_out()
+# connection_in(buildings, resources, roads, parks, resource_roads, monstrs, screen, score)
+# buildings, resources, roads, parks, resource_roads, monstrs, screen, score = connection_out()
 
 clock = pygame.time.Clock()
 load_fon()
@@ -111,8 +111,8 @@ while not finished:
         draw_fon_start(screen, time)
 
         # FIXME-Лера-настройка
-        button_start_new = Button(x=125, y=600, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='START', )
-        button_continue = Button(x=675, y=600, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='CONTINUE', )
+        button_start_new = Button(x=125, y=650, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='START', )
+        button_continue = Button(x=675, y=650, width=BUTTON_WIDTH, height=BUTTON_HIGHT, text='CONTINUE', )
 
         # Вывод реального fps
         font = pygame.font.SysFont(None, 20)
@@ -138,6 +138,7 @@ while not finished:
                 finished = True
 
             if button_continue.pressed and event.type == pygame.MOUSEBUTTONDOWN:
+                connection_in(buildings, resources, roads, parks, resource_roads, monstrs, screen, score)
                 upload_data_from_file()
                 buildings, resources, roads, parks, resource_roads, monstrs, screen, score = connection_out()
                 page = 'main'
@@ -145,9 +146,13 @@ while not finished:
                 # Подгрузка данных в массив building_data из данных о предыдущей игре
                 for b in buildings:
                     building_data = add_data('house', building_data, b[0])
-
                 for r in resources:
                     building_data = add_data('water', building_data, r)
+                for p in parks:
+                    building_data = add_data('park', building_data, p)
+
+                for r in roads:
+                    building_roads = add_data('road', building_roads, r)
 
                 # print(building_data)
 
