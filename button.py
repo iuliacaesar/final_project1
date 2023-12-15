@@ -62,7 +62,7 @@ class Button:
             text_rect = text.get_rect(center=(self.x + self.width // 2, self.y + self.height // 2))
             window.blit(text, text_rect)
         elif self.text=="block":
-            draw_huina(self, window)
+            draw_block(self, window)
         elif self.text=="MONSTR":
             draw_monstr(self, window)
         else:
