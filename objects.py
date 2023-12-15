@@ -70,7 +70,7 @@ class Buildings():
     def get_type(self):
         return self.__type
     def set_type(self, type):
-        self.__type = type
+        self.type = type
     '''
     type - тип здания
     level - уровень 

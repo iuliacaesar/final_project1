@@ -80,8 +80,8 @@ x = 0
 # Юле: А тут после подгрузки данные из файла предыдущей игры нужно изменить и building_data
 # ниже, после нажатия кнопки continue
 # ЗДЕСЬ
-connection_in(buildings, resources, water, electricity, screen, score)
-buildings, resources, water, electricity, screen, score = connection_out()
+connection_in(buildings, resources, roads, parks, resource_roads, monstrs, screen, score)
+buildings, resources, roads, parks, resource_roads, monstrs, screen, score = connection_out()
 
 clock = pygame.time.Clock()
 load_fon()
@@ -124,6 +124,7 @@ while not finished:
 
             if button_continue.pressed and event.type == pygame.MOUSEBUTTONDOWN:
                 upload_data_from_file()
+                buildings, resources, roads, parks, resource_roads, monstrs, screen, score = connection_out()
                 page = 'main'
 
                 # Подгрузка данных в массив building_data из данных о предыдущей игре
@@ -250,6 +251,7 @@ while not finished:
             button_save.get_pressed(event)
             button_underground.get_pressed(event)
             if button_save.pressed and event.type == pygame.MOUSEBUTTONDOWN:
+                connection_in(buildings, resources, roads, parks, resource_roads, monstrs, screen, score)
                 save_to_file()
                 text = 'save'
                 texttime = pygame.time.get_ticks()
@@ -392,7 +394,6 @@ while not finished:
                         if obj == b[0]: buildings.remove(b)
                     # if obj in buildings: buildings.remove(obj)
                     # if obj in a: a.remove(obj)
-                    print(obj)
                     building_data[int(mouse_y // len_height)][int(mouse_x // len_width)] = None
                     score += 40
             
@@ -438,7 +439,6 @@ while not finished:
                     #     roads.append(new_resource)
                     #     building_data = add_data(what_you_build, building_data, new_resource)
                     roads.append(new_resource)
-                    print('ДоРОга - ', roads)
                     building_roads = add_data(what_you_build, building_roads, new_resource)
                     # building_data = add_data(what_you_build, building_data, new_resource)
                     #ЗДЕСЬ
@@ -622,5 +622,3 @@ while not finished:
     time += 1
 
 pygame.quit()
-
-"Мяу"
