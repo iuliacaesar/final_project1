@@ -62,7 +62,7 @@ def load_fon():
     button_road = pygame.image.load(".\images\\button_road.png").convert_alpha()
     button_park = pygame.image.load(".\images\\button_park.png").convert_alpha()
     button_water = pygame.image.load(".\images\\button_water.png").convert_alpha()
-    button_destroy = pygame.image.load(".\images\\destroy.jpg").convert_alpha()
+    button_destroy = pygame.image.load(".\images\\destroy.png").convert_alpha()
 
     but_h1=pygame.image.load(".\images\\11zon_1.png").convert_alpha()
     but_h2 = pygame.image.load(".\images\\11zon_2.png").convert_alpha()
@@ -174,7 +174,7 @@ def draw_monstr(but, window):
     temp_surface.blit(image, [0, 0])
     scaled_image = pygame.transform.scale(image, (but.width, but.height))
     window.blit(scaled_image, (but.x, but.y))
-def draw_huina(but, window):
+def draw_block(but, window):
     if int(but.time) == 1:
         image = but_h1
     elif int(but.time) == 2:
@@ -470,7 +470,7 @@ def draw_final_turtles(x, screen):
     text = font.render(text_money, True, (90, 0, 150, 100))
     text_rect = text.get_rect(center=(600, 200))
     screen.blit(text, text_rect)
-    image = FINAL[(x//7)%20]
+    image = FINAL[(x*10//58)%20]
     screen.blit(image, (350, 350))
 
 

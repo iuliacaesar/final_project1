@@ -457,9 +457,7 @@ def place_for_monstr(building, building_data):
             if building_data[mas[r][1]][mas[r][0]] == None:
                 mass = [mas[r][0] * len_width, mas[r][1] * len_height]
                 break
-        print(mas[r], "||||", x, y)
     return mass
-
 
 
 
