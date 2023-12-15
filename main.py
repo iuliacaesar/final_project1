@@ -375,7 +375,7 @@ while not finished:
             screen.blit(temp_surface, [WIDTH * 0.2, HEIGHT * 0.4])
             font_ = pygame.font.SysFont(None, 40)
             img_ = font_.render('Место для строительства занято', True, (0, 0, 0))
-            screen.blit(img_, (WIDTH * 0.3, HEIGHT * 0.475))
+            screen.blit(img_, (WIDTH * 0.35, HEIGHT * 0.485))
 
         pygame.display.update()
 
@@ -539,7 +539,7 @@ while not finished:
             screen.blit(temp_surface, [WIDTH * 0.2, HEIGHT * 0.4])
             font_ = pygame.font.SysFont(None, 40)
             img_ = font_.render('Недостаточно счёта для строительства', True, (0, 0, 0))
-            screen.blit(img_, (WIDTH * 0.3, HEIGHT * 0.475))
+            screen.blit(img_, (WIDTH * 0.3, HEIGHT * 0.485))
         pygame.display.update()
 
         for event in pygame.event.get():
